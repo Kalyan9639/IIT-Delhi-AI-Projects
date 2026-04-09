@@ -1,75 +1,136 @@
 # AI-Powered Cybersecurity Threat Detection
 
-This project builds a machine learning system for detecting cyber threats from network flow data using the UNSW-NB15 Kaggle dataset.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Streamlit-UI-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/scikit--learn-ML-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn">
+</p>
 
-## Project Goal
+<p align="center">
+  A production-style machine learning system for detecting suspicious network traffic from UNSW-NB15 flow records, with a polished Streamlit dashboard, FastAPI inference service, and reusable training pipeline.
+</p>
 
-Detect suspicious activity such as malicious traffic, attacks, and unauthorized access using a trained ML pipeline and expose predictions through:
+---
 
-- a command-line script
-- a FastAPI service
-- a Streamlit dashboard
+## Overview
+
+This project detects malicious or suspicious network flows using a trained `ExtraTreesClassifier` pipeline built on the UNSW-NB15 dataset.
+
+It includes:
+
+- a clean Streamlit security dashboard
+- a FastAPI prediction service
+- a command-line demo for batch scoring
+- reusable preprocessing, prediction, and alert generation helpers
+
+---
+
+## Key Features
+
+- Threat detection on UNSW-NB15-style traffic data
+- Feature engineering for flow-level security signals
+- Missing-value handling and categorical encoding
+- Confidence scoring with alert generation
+- Streamlit UI with progress states and result summaries
+- FastAPI endpoint for programmatic inference
+- Model evaluation and confusion-matrix output
+
+---
+
+## Tech Stack
+
+- Python
+- Pandas
+- NumPy
+- scikit-learn
+- Streamlit
+- FastAPI
+- Uvicorn
+- Requests
+- Joblib
+
+---
+
+## Project Structure
+
+```text
+.
+|-- app.py                  # Main Streamlit dashboard
+|-- dashboard/app.py        # Streamlit launcher wrapper
+|-- main.py                 # Command-line scoring demo
+|-- test_api.py             # Simple API client
+|-- data/
+|   |-- UNSW_train.csv
+|   `-- UNSW_test.csv
+|-- models/
+|   |-- cyber_threat_model.joblib
+|   `-- metrics.json
+|-- artifacts/
+|   `-- confusion_matrix.png
+`-- src/
+    |-- api.py
+    |-- alerts.py
+    |-- config.py
+    |-- evaluate.py
+    |-- model.py
+    |-- predict.py
+    |-- preprocess.py
+    |-- train.py
+    `-- visualize.py
+```
+
+---
 
 ## Dataset
 
-The project uses the UNSW-NB15 datasets placed in:
+The project expects the UNSW-NB15 CSV files in `data/`:
 
 - `data/UNSW_train.csv`
 - `data/UNSW_test.csv`
 
-These files should contain the standard UNSW-NB15 columns, including:
+The model uses:
 
-- numeric traffic-flow features
-- categorical fields like `proto`, `service`, and `state`
-- target column `label`
-- attack category column `attack_cat`
+- numeric flow features
+- categorical fields: `proto`, `service`, `state`
+- target label: `label`
+- optional attack category context: `attack_cat`
 
-## What The Model Does
+---
 
-The model pipeline:
+## Model Pipeline
 
-- loads the raw dataset
-- engineers useful traffic features
-- imputes missing values
-- scales numeric features
-- one-hot encodes categorical features
-- trains an `ExtraTreesClassifier`
-- predicts whether a row is normal or malicious
-- generates alert metadata for suspicious traffic
+The training and inference pipeline:
 
-## Project Structure
+1. loads the raw UNSW-NB15 data
+2. engineers traffic-derived features
+3. imputes missing values
+4. scales numeric features
+5. one-hot encodes categorical columns
+6. trains an `ExtraTreesClassifier`
+7. predicts normal vs malicious traffic
+8. generates alert metadata for suspicious rows
 
-- `main.py` - command-line entry point for scoring the test set
-- `src/config.py` - central paths and column definitions
-- `src/preprocess.py` - loading, cleaning, and feature engineering
-- `src/model.py` - model pipeline definition
-- `src/train.py` - training script
-- `src/evaluate.py` - evaluation script
-- `src/predict.py` - reusable prediction helpers
-- `src/alerts.py` - threat alert generation
-- `src/visualize.py` - confusion matrix plotting
-- `src/api.py` - FastAPI application
-- `dashboard/app.py` - Streamlit app
-- `test_api.py` - API test client using Requests
+---
 
 ## Setup
 
-Install the dependencies:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-If you are using the bundled virtual environment, activate it first and then install:
+If you are using the bundled virtual environment:
 
 ```bash
 .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Train The Model
+---
 
-Run:
+## Train The Model
 
 ```bash
 python -m src.train
@@ -77,13 +138,13 @@ python -m src.train
 
 This will:
 
-- train the ML pipeline
-- save the model to `models/cyber_threat_model.joblib`
+- train the model pipeline
+- save the artifact to `models/cyber_threat_model.joblib`
 - save metrics to `models/metrics.json`
 
-## Evaluate The Model
+---
 
-Run:
+## Evaluate The Model
 
 ```bash
 python -m src.evaluate
@@ -93,17 +154,33 @@ This will:
 
 - evaluate the saved model on `data/UNSW_test.csv`
 - print classification metrics
-- save a confusion matrix image to `artifacts/confusion_matrix.png`
+- generate `artifacts/confusion_matrix.png`
 
-## Run The Command-Line Demo
+---
 
-Run:
+## Run The Dashboard
+
+Start the Streamlit dashboard:
 
 ```bash
-python main.py
+streamlit run app.py
 ```
 
-This loads the test set, scores it, and prints sample alerts.
+If you prefer the wrapper entrypoint:
+
+```bash
+streamlit run dashboard/app.py
+```
+
+What you get:
+
+- upload and preview the CSV
+- visible scanning progress while inference runs
+- threat summary cards
+- alert tables and confidence charts
+- scored CSV download
+
+---
 
 ## Run The API
 
@@ -115,17 +192,19 @@ uvicorn src.api:app --reload
 
 Health check:
 
-```bash
+```http
 GET /health
 ```
 
 Prediction endpoint:
 
-```bash
+```http
 POST /predict
 ```
 
-Example request body:
+### Example Request
+
+The API expects UNSW-NB15-style records with the same feature names used during training. For best results, send the full row schema from the dataset.
 
 ```json
 {
@@ -134,35 +213,75 @@ Example request body:
       "dur": 0.121478,
       "proto": "tcp",
       "service": "-",
-      "state": "FIN"
+      "state": "FIN",
+      "spkts": 6,
+      "dpkts": 4,
+      "sbytes": 258,
+      "dbytes": 172,
+      "rate": 74.08749,
+      "sttl": 252,
+      "dttl": 254,
+      "sload": 14158.94238,
+      "dload": 8495.365234,
+      "sloss": 0,
+      "dloss": 0,
+      "sinpkt": 24.2956,
+      "dinpkt": 8.375,
+      "sjit": 30.177547,
+      "djit": 11.830604,
+      "swin": 255,
+      "stcpb": 621772692,
+      "dtcpb": 2202533631,
+      "dwin": 255,
+      "tcprtt": 0.0,
+      "synack": 0.0,
+      "ackdat": 0.0,
+      "smean": 43,
+      "dmean": 43,
+      "trans_depth": 0,
+      "response_body_len": 0,
+      "ct_srv_src": 1,
+      "ct_state_ttl": 0,
+      "ct_dst_ltm": 1,
+      "ct_src_dport_ltm": 1,
+      "ct_dst_sport_ltm": 1,
+      "ct_dst_src_ltm": 1,
+      "is_ftp_login": 0,
+      "ct_ftp_cmd": 0,
+      "ct_flw_http_mthd": 0,
+      "ct_src_ltm": 1,
+      "ct_srv_dst": 1,
+      "is_sm_ips_ports": 0
     }
   ]
 }
 ```
 
-The API expects UNSW-NB15-style records with the same feature names as the dataset.
+---
 
 ## Test The API
 
-Run:
+Run the local API client:
 
 ```bash
 python test_api.py
 ```
 
-This script sends a small sample payload to the API and prints the JSON response.
+This sends a sample payload to the server and prints the JSON response.
 
-## Run The Dashboard
+---
 
-Launch the Streamlit app:
+## Command-Line Demo
 
 ```bash
-streamlit run dashboard/app.py
+python main.py
 ```
 
-The dashboard lets you upload a CSV file and view predictions, threat scores, and generated alerts.
+This loads the test set, scores it, and prints a sample of the results.
 
-## Current Artifacts
+---
+
+## Outputs
 
 After training and evaluation, the project generates:
 
@@ -170,9 +289,20 @@ After training and evaluation, the project generates:
 - `models/metrics.json`
 - `artifacts/confusion_matrix.png`
 
+---
+
 ## Notes
 
-- The repository now uses a single preprocessing and prediction path so training and inference stay aligned.
-- The model is based on the binary `label` column, while `attack_cat` is used for context in alerts when available.
-- The API and dashboard expect the same UNSW-NB15 column structure used during training.
+- Training and inference use the same preprocessing path to keep predictions consistent.
+- The model is trained on the binary `label` column.
+- `attack_cat` is used only as contextual information in alerts when present.
+- The dashboard is optimized for UNSW-NB15 CSV uploads and expects the same feature structure used during training.
 
+---
+
+## Why This Project Stands Out
+
+- Clear separation between training, inference, API, and UI
+- Reusable feature engineering and alert logic
+- Strong dashboard UX with progress indicators and threat summaries
+- Practical foundation for a real cybersecurity analytics demo
