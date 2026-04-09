@@ -298,11 +298,3 @@ After training and evaluation, the project generates:
 - `attack_cat` is used only as contextual information in alerts when present.
 - The dashboard is optimized for UNSW-NB15 CSV uploads and expects the same feature structure used during training.
 
----
-
-## Why This Project Stands Out
-
-- Clear separation between training, inference, API, and UI
-- Reusable feature engineering and alert logic
-- Strong dashboard UX with progress indicators and threat summaries
-- Practical foundation for a real cybersecurity analytics demo
