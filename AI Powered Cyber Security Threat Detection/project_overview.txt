@@ -1,0 +1,35 @@
+Project Overview
+�� Project Title: AI-Powered Cybersecurity Threat Detection
+�� Objective: Build an AI system that detects cyber threats like phishing, malware, and unauthorized
+access using machine learning.
+�� Industry Relevance: Used by Google, Microsoft, IBM Security, and Palo Alto Networks for real-
+time threat monitoring.
+
+Step 1: Understanding the Problem &amp; Why This Project is Important
+What are we doing? → Building an AI system that detects cyberattacks in real-time.
+Why are we doing it? → Traditional security systems use static rules and struggle to detect new
+cyber threats. AI helps detect patterns dynamically.
+
+Step 2: Collect &amp; Prepare Cybersecurity Data
+What are we doing? → Gathering real-world cybersecurity datasets.
+Why are we doing it? → AI models need data to learn from and make predictions.
+
+Step 3: Preprocess &amp; Analyze the Data
+What are we doing? → Cleaning and preparing data for AI training.
+Why are we doing it? → Raw data has missing values and irrelevant information.
+
+Step 4: Choose &amp; Train the AI Model
+What are we doing? → Training an AI model to detect cyber threats.
+Why are we doing it? → Different models have different strengths.
+
+Step 5: Deploy the AI Model for Real-Time Monitoring
+What are we doing? → Creating an API that predicts cyberattacks in real time.
+Why are we doing it? → Businesses need an automated way to detect cyber threats.
+
+Step 6: Test API using Python Requests. Use FastAPI since testing api's is easy with that
+What are we doing? → Testing if the AI model correctly detects cyber threats.
+
+Step 7: Improve the Model for Real-World Use
+What are we doing? → Optimizing the AI model for better accuracy.
+Why are we doing it? → Cyber threats evolve, and AI must adapt.
+
