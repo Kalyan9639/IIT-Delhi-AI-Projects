@@ -1,0 +1,9 @@
+numpy
+pandas
+matplotlib
+joblib
+fastapi
+uvicorn
+streamlit
+requests
+pydantic

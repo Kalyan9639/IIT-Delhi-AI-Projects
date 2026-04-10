@@ -1,0 +1,131 @@
+Project Goal: Forecast electricity usage in homes/buildings using AI to support smart cities &amp; climate
+tech.
+
+Problem Being Solved by This Project:
+Unpredictable Energy Demand
+Problem: Power grids often fail to balance supply and demand, leading to blackouts or wastage.
+Solution: Your AI predicts when and how much energy will be consumed, so supply can be planned
+accordingly.
+
+Energy Wastage in Homes, Buildings &amp; Industries
+Problem: Buildings and factories often use energy inefficiently, especially during peak hours.
+Solution: Your model helps identify usage trends and optimize operations to save electricity and
+cost.
+
+High Electricity Bills Due to Lack of Forecasting
+Problem: People and businesses often pay more because they don’t know how their energy usage
+fluctuates.
+Solution: The AI system helps forecast and control energy usage to avoid peak-time penalties.
+
+Environmental Impact &amp; Carbon Emissions
+Problem: Overuse of energy leads to more power being generated from fossil fuels, increasing
+carbon emissions.
+Solution: Forecasting allows better planning, helping cities move towards sustainable energy usage
+and net-zero goals.
+
+Manual Monitoring &amp; Inefficiency
+Problem: Traditional monitoring of energy consumption is manual, slow, and error-prone.
+Solution: AI automates predictions and analysis in real-time, reducing human error and response
+delays.
+
+Mismatch Between Production &amp; Consumption
+Problem: Power plants often generate more or less electricity than needed, wasting resources.
+Solution: Your forecasting system bridges the gap, helping producers align with real-time demand.
+
+Lack of AI Talent in Clean Tech Sector
+Problem: The industry lacks engineers who understand both AI and energy systems.
+Solution: By learning this project, you are becoming part of a rare, high-demand talent pool for
+smart grids, green buildings, and climate tech.
+
+Here’s a list of a few product-based and service-based companies who are actively working on AI-
+powered energy consumption forecasting, smart grids, and energy optimization using machine
+learning:
+
+Product-Based Companies:
+These companies are building real-world products and platforms that use AI for energy efficiency,
+smart city infrastructure, or intelligent building management:
+1. Google
+2. Microsoft
+3. Apple
+4. Tesla
+5. Amazon
+6. Siemens
+7. IBM
+8. Intel
+9. NVIDIA
+10. General Electric (GE)
+11. Schneider Electric
+12. ABB
+13. Honeywell
+14. Bosch
+15. Hitachi Energy
+
+Service-Based &amp; Energy Sector Companies:
+These companies are delivering AI and data-driven energy solutions to clients, governments, and
+large-scale infrastructure projects:
+16. TCS (Tata Consultancy Services)
+17. Infosys
+18. Wipro
+19. Accenture
+20. Capgemini
+21. Deloitte
+
+22. Cognizant
+23. L&amp;T Technology Services
+24. Tata Power
+25. Enel (Italy)
+26. ENGIE (France)
+27. Shell Energy
+28. National Grid (UK/US)
+29. Siemens Gamesa Renewable Energy
+30. E.ON (Germany)
+
+---
+
+## Steps to perform:
+
+Step 1: Build an AI That Predicts Future Power Demand
+What are we doing?
+We’re building an AI system that can predict how much electricity will be used hourly/daily in the
+future.
+Why are we doing it?
+To help smart buildings, factories, and cities optimize usage, reduce wastage, and avoid blackouts.
+
+
+Step 2: Teach Your AI with Real-World Smart Grid Logs
+What are we doing?
+Loading and visualizing real historical energy usage data.
+Why are we doing it?
+
+To allow AI to learn from daily and hourly consumption patterns and prepare the data in a format it
+can learn from.
+
+
+Step 3: Let Your AI Learn from Human Behavior (Time-Based Patterns)
+What are we doing?
+Extracting hour and day of week features from the dataset.
+Why are we doing it?
+To teach AI how energy usage changes with human routines (e.g., office hours, weekends).
+
+
+Step 4: Build an Intelligent  Network to Forecast Energy Usage
+What are we doing?
+Training a XGBoost or RandomForest to forecast electricity usage.
+Why are we doing it?
+To build a smart AI that understands complex energy usage patterns.
+
+
+Step 5: Freeze the Brain of Your AI — Save the Learned Intelligence
+What are we doing?
+Saving the trained model so it can be used again without retraining.
+Why are we doing it?
+To reuse the model instantly for real-time prediction systems.
+
+
+Step 6: Give Your AI a Voice — Launch a Real-Time Prediction Engine
+What are we doing?
+Creating a FastAPI API that returns energy usage predictions for any hour and day.
+Why are we doing it?
+To simulate how apps or systems will call your AI to get instant results.
+
+

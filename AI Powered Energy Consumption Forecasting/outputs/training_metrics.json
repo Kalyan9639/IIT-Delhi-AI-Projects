@@ -1,0 +1,50 @@
+{
+  "forecast_horizon_hours": 24,
+  "training_window_days": 365,
+  "fold_count": 2,
+  "folds": [
+    {
+      "fold": 1,
+      "origin": "2014-06-01T01:00:00",
+      "rows": 240,
+      "mae": 898.1852370208076,
+      "rmse": 1253.1563426543967,
+      "r2": 0.9698823906750792,
+      "naive_mae": 1437.925,
+      "naive_rmse": 2099.262854750051,
+      "naive_r2": 0.9154830872157418
+    },
+    {
+      "fold": 2,
+      "origin": "2018-08-01T05:00:00",
+      "rows": 240,
+      "mae": 942.9605703534583,
+      "rmse": 1880.3728263951857,
+      "r2": 0.9721307592570374,
+      "naive_mae": 2644.554166666667,
+      "naive_rmse": 4815.407734986381,
+      "naive_r2": 0.8172306630847546
+    }
+  ],
+  "mae": 920.5729036871329,
+  "rmse": 1597.8427309000663,
+  "r2": 0.9719842924150986,
+  "persistence_mae": 2041.2395833333333,
+  "persistence_rmse": 3714.502401903921,
+  "persistence_r2": 0.8485968815904879,
+  "final_fit_rows": 1088111,
+  "feature_count": 65,
+  "regions": [
+    "AEP",
+    "COMED",
+    "DAYTON",
+    "DEOK",
+    "DOM",
+    "DUQ",
+    "EKPC",
+    "FE",
+    "PJME",
+    "PJMW"
+  ],
+  "model_type": "RidgeRegressor"
+}
