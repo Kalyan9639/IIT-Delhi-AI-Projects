@@ -9,7 +9,12 @@
 
 An end-to-end autonomous driving stack built for the CARLA Simulator. The system implements a robust Sense-Plan-Act pipeline leveraging YOLO for real-time perception, Lidar for spatial awareness, and dynamic PID-based Adaptive Cruise Control (ACC) for intelligent navigation.
 
-![Watch the Demo here](https://youtu.be/4FRGZs6qFhk)
+<div align="center">
+  <a href="https://youtu.be/4FRGZs6qFhk">
+    <img src="https://img.youtube.com/vi/4FRGZs6qFhk/0.jpg" alt="AI Powered Autonomous Navigation System Demo" style="width:100%;">
+  </a>
+  <p><b>Click above to watch the AI-Powered Autonomous Navigation System in action!</b></p>
+</div>
 
 ---
 
