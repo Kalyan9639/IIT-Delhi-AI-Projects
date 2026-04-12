@@ -1,0 +1,29 @@
+# =============================================================================
+# AI Powered Autonomous Navigation System — Python Dependencies
+# Target: Python 3.12 | uv venv (ans) | CARLA 0.9.16
+# =============================================================================
+
+# --- Core Simulation ---
+# carla is installed from the local wheel — do NOT pip install from PyPI
+# uv pip install D:\Carla\PythonAPI\carla\dist\carla-0.9.16-cp312-cp312-win_amd64.whl
+numpy<2.0.0             # strict: CARLA/Boost bindings break with numpy 2.x
+opencv-python           # camera frame processing
+pygame                  # manual override / visualisation window
+
+# --- AI & Perception (YOLO26 via Ultralytics) ---
+ultralytics             # YOLO26 model — pip package is ultralytics v8.x
+                        # (YOLO26 is the model name, not the package version)
+                        # Installed: ultralytics==8.4.37
+torch                   # PyTorch with CUDA — install CUDA build separately:
+                        #   uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+torchvision             # image transforms
+
+# --- TensorRT (pip-installable, no SDK zip required in 2026) ---
+tensorrt                # NVIDIA TensorRT runtime for RTX 50 acceleration
+                        # Prereqs: GPU drivers + CUDA Toolkit 12.x + cuDNN
+
+# --- Math & Utilities ---
+scipy                   # PID/MPC controller calculations
+filterpy                # Kalman filters for sensor fusion
+matplotlib              # telemetry / sensor data plotting
+pandas                  # drive data logging & analysis
