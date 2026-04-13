@@ -1,0 +1,57 @@
+{
+  "selected_model": "random_forest",
+  "threshold": 0.30499999999999994,
+  "validation_metrics": {
+    "accuracy": 0.9875,
+    "precision": 0.8412698412698413,
+    "recall": 0.7794117647058824,
+    "f1": 0.8091603053435115,
+    "roc_auc": 0.956502709779564,
+    "average_precision": 0.8399754859040718,
+    "tn": 1922.0,
+    "fp": 10.0,
+    "fn": 15.0,
+    "tp": 53.0,
+    "validation_threshold": 0.30499999999999994
+  },
+  "test_metrics": {
+    "accuracy": 0.989,
+    "precision": 0.9423076923076923,
+    "recall": 0.7205882352941176,
+    "f1": 0.8166666666666667,
+    "roc_auc": 0.9673456339057362,
+    "average_precision": 0.8509242941730594,
+    "tn": 1929.0,
+    "fp": 3.0,
+    "fn": 19.0,
+    "tp": 49.0
+  },
+  "dataset_summary": {
+    "rows": 10000,
+    "columns": 14,
+    "target_rate": 0.0339,
+    "failure_count": 339,
+    "leakage_columns_present": [
+      "udi",
+      "product_id",
+      "twf",
+      "hdf",
+      "pwf",
+      "osf",
+      "rnf"
+    ],
+    "feature_columns": [
+      "type",
+      "air_temperature",
+      "process_temperature",
+      "rotational_speed",
+      "torque",
+      "tool_wear",
+      "temperature_delta",
+      "power_proxy",
+      "wear_per_speed"
+    ],
+    "target_column": "machine_failure"
+  },
+  "trained_at_utc": "2026-04-13T12:00:17.452753+00:00"
+}

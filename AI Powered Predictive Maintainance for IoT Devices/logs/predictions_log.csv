@@ -1,0 +1,23 @@
+prediction_id,timestamp_utc,batch_id,sample_index,type,air_temperature,process_temperature,rotational_speed,torque,tool_wear,failure_prediction,risk_probability,risk_level,action,decision_threshold,model_name
+ed23a790-7867-4aa0-9c74-8a2314dc75ae,2026-04-13T12:32:54.238496+00:00,,,L,295.8,306.1,1680.0,34.2,12.0,0,0.0,LOW,No immediate maintenance required,0.305,random_forest
+59899c44-b1e2-4805-83a1-49133d9a739f,2026-04-13T12:33:12.223144+00:00,,,L,295.8,306.1,1500.0,30.5,15.0,0,0.0,LOW,No immediate maintenance required,0.305,random_forest
+522fa5bb-849b-4346-b3e6-7447ab42cec4,2026-04-13T12:33:52.393945+00:00,,,H,320.0,345.0,2500.0,90.0,300.0,1,0.3429,LOW,No immediate maintenance required,0.305,random_forest
+41f8a764-b502-4cc9-9a4c-e29c4191a01a,2026-04-13T12:37:32.727531+00:00,,,H,320.0,345.0,2500.0,90.0,300.0,1,0.3429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+1f174302-6d47-4e84-b6f7-c9d47a59bff5,2026-04-13T12:37:49.033297+00:00,,,L,320.0,345.0,2500.0,90.0,300.0,1,0.4429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+3458b2d3-d80a-435c-9833-07547b979411,2026-04-13T12:37:57.294909+00:00,,,M,320.0,345.0,2500.0,90.0,300.0,1,0.4,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+69c6e787-21bd-4d29-bcef-23b19c90a148,2026-04-13T12:43:44.568157+00:00,,,M,320.0,345.0,2500.0,90.0,300.0,1,0.4,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+807e8d26-323a-4851-aa42-b347be07e6d4,2026-04-13T12:44:00.422749+00:00,,,M,320.0,345.0,2500.0,90.0,300.0,1,0.4,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+b1f46d19-804a-4f0d-beb8-c72079f37256,2026-04-13T12:44:10.282804+00:00,,,M,320.0,345.0,2500.0,90.0,300.0,1,0.4,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+1480b3ee-c9ae-470d-81ef-88f3098bb4ad,2026-04-13T12:44:38.064104+00:00,,,L,320.0,345.0,2500.0,90.0,300.0,1,0.4429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+6ba6d507-4c3b-4296-9abd-d81872e5435b,2026-04-13T12:47:31.962806+00:00,,,L,320.0,345.0,2500.0,90.0,300.0,1,0.4429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+57b230ac-3705-4a46-b422-79807305b729,2026-04-13T12:47:57.639676+00:00,,,L,295.8,306.1,1680.0,34.2,12.0,0,0.0,LOW,No immediate maintenance required,0.305,random_forest
+1bde751d-2ef3-4754-98f2-9113cb451a13,2026-04-13T12:48:15.840132+00:00,,,L,295.8,306.1,1680.0,34.2,12.0,0,0.0,LOW,No immediate maintenance required,0.305,random_forest
+09009cfa-42e1-425c-96ff-b6ad17b29e32,2026-04-13T12:51:33.151289+00:00,,,L,320.0,345.0,2500.0,90.0,300.0,1,0.4429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+768fe50e-f494-4fb3-a732-ecb1a9d68637,2026-04-13T12:51:43.780697+00:00,,,L,320.0,345.0,2500.0,90.0,300.0,1,0.4429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+32a50c88-c44a-429d-bcc8-f27f115710e0,2026-04-13T12:51:48.053758+00:00,,,L,320.0,345.0,2500.0,90.0,300.0,1,0.4429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+74e0ae7a-2d04-4314-87f3-88405219b0d8,2026-04-13T12:54:15.304150+00:00,,,L,320.0,345.0,2500.0,90.0,300.0,1,0.4429,MEDIUM,Inspect machine soon and monitor sensor drift,0.305,random_forest
+da3d0c2a-bb57-4281-be6b-d5494bff41fe,2026-04-13T12:54:25.312791+00:00,,,M,298.4,309.0,1450.0,41.8,65.0,0,0.0,LOW,No immediate maintenance required,0.305,random_forest
+173c1d6b-ca3f-4c97-8d20-d6a85be1f3db,2026-04-13T12:54:39.607008+00:00,,,L,303.2,313.4,1205.0,28.6,150.0,0,0.0714,LOW,No immediate maintenance required,0.305,random_forest
+c31d8ae8-231c-4451-87ab-0ab851f05e1f,2026-04-13T12:55:16.381768+00:00,,,M,320.0,345.0,2400.0,90.0,600.0,1,0.5429,HIGH,Schedule maintenance immediately,0.305,random_forest
+92d515cc-59ef-4792-8d27-45486cbe51b7,2026-04-13T12:55:21.681855+00:00,,,M,320.0,345.0,2400.0,90.0,600.0,1,0.5429,HIGH,Schedule maintenance immediately,0.305,random_forest
+80766a95-461d-4b0e-84df-230e622cf2cd,2026-04-13T12:55:25.004579+00:00,,,M,320.0,345.0,2400.0,90.0,600.0,1,0.5429,HIGH,Schedule maintenance immediately,0.305,random_forest

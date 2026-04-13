@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111f" />
+  <title>PredictGuard AI | Predictive Maintenance Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <div class="bg-orb bg-orb-a"></div>
+  <div class="bg-orb bg-orb-b"></div>
+  <div class="bg-grid"></div>
+
+  <header class="topbar">
+    <div>
+      <div class="brand-mark">PG</div>
+      <div>
+        <div class="eyebrow">Industrial AI Monitoring</div>
+        <h1>PredictGuard AI Dashboard</h1>
+      </div>
+    </div>
+    <div class="status-chip" id="statusChip">Loading model...</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero glass reveal">
+      <div class="hero-copy">
+        <!-- <p class="eyebrow">Phase 1 control center</p> -->
+        <h2>Predict failures before the machine tells you it is too late.</h2>
+        <p class="hero-text">
+          Live risk scoring, dataset intelligence, and model observability in one high-contrast dashboard.
+        </p>
+        <div class="hero-actions">
+          <a href="#predictor" class="button primary">Open Live Predictor</a>
+          <a href="#analytics" class="button secondary">View Model Analytics</a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="metric-ring">
+          <div class="metric-ring-inner">
+            <span class="ring-label">Risk</span>
+            <strong id="riskValue">--%</strong>
+            <span id="riskLabel">Awaiting input</span>
+          </div>
+        </div>
+        <div class="hero-mini-grid">
+          <div class="mini-card">
+            <span>Model</span>
+            <strong id="modelName">--</strong>
+          </div>
+          <div class="mini-card">
+            <span>Threshold</span>
+            <strong id="modelThreshold">--</strong>
+          </div>
+          <div class="mini-card">
+            <span>Failure rate in Trained Data</span>
+            <strong id="failureRate">--</strong>
+          </div>
+          <div class="mini-card">
+            <span>Rows</span>
+            <strong id="datasetRows">--</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="kpi-grid reveal">
+      <article class="kpi-card glass">
+        <span>Validation F1</span>
+        <strong data-count-up="validationF1">0.00</strong>
+        <small>Threshold-optimized on validation split</small>
+      </article>
+      <article class="kpi-card glass">
+        <span>Test Recall</span>
+        <strong data-count-up="testRecall">0.00</strong>
+        <small>Focus on catching failures early</small>
+      </article>
+      <article class="kpi-card glass">
+        <span>Test PR-AUC</span>
+        <strong data-count-up="testPRAUC">0.00</strong>
+        <small>Better indicator for imbalanced data</small>
+      </article>
+      <article class="kpi-card glass">
+        <span>Failure Count</span>
+        <strong data-count-up="failureCount">0</strong>
+        <small>Observed in the AI4I 2020 dataset</small>
+      </article>
+    </section>
+
+    <section id="predictor" class="content-grid reveal">
+      <article class="panel glass prediction-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Live predictor</p>
+            <h3>Test a machine sample</h3>
+          </div>
+          <button class="ghost-button" id="randomizeBtn" type="button">Load scenario</button>
+        </div>
+        <form id="predictForm" class="predict-form">
+          <label>
+            Type
+            <select name="type" required>
+              <option value="L">L</option>
+              <option value="M" selected>M</option>
+              <option value="H">H</option>
+            </select>
+          </label>
+          <label>
+            Air temperature [K]
+            <input name="air_temperature" type="number" step="0.1" min="0" value="298.1" required />
+          </label>
+          <label>
+            Process temperature [K]
+            <input name="process_temperature" type="number" step="0.1" min="0" value="308.6" required />
+          </label>
+          <label>
+            Rotational speed [rpm]
+            <input name="rotational_speed" type="number" step="1" min="1" value="1551" required />
+          </label>
+          <label>
+            Torque [Nm]
+            <input name="torque" type="number" step="0.1" min="0" value="42.8" required />
+          </label>
+          <label>
+            Tool wear [min]
+            <input name="tool_wear" type="number" step="1" min="0" value="10" required />
+          </label>
+          <div class="form-actions">
+            <button class="button primary" type="submit">Predict risk</button>
+            <button class="button secondary" type="button" id="resetBtn">Reset</button>
+          </div>
+        </form>
+      </article>
+
+      <article class="panel glass result-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Inference output</p>
+            <h3>Operational response</h3>
+          </div>
+          <span class="subtle-pill" id="apiState">Idle</span>
+        </div>
+        <div class="result-layout">
+          <div class="result-meter">
+            <div class="meter-track">
+              <div class="meter-fill" id="meterFill"></div>
+            </div>
+            <div class="meter-copy">
+              <strong id="predictionValue">--</strong>
+              <span id="riskProbability">Awaiting prediction</span>
+            </div>
+          </div>
+          <div class="result-card">
+            <div>
+              <span>Risk level</span>
+              <strong id="resultRiskLevel">--</strong>
+            </div>
+            <div>
+              <span>Action</span>
+              <p id="resultAction">Submit a sample to get an action recommendation.</p>
+            </div>
+          </div>
+        </div>
+        <div class="recent-list">
+          <div class="recent-list-header">
+            <span>Recent predictions</span>
+            <button class="link-button" id="clearHistoryBtn" type="button">Clear</button>
+          </div>
+          <div id="predictionHistory" class="history-list"></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="analytics" class="analytics-grid reveal">
+      <article class="panel glass chart-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Target balance</p>
+            <h3>Healthy vs failure</h3>
+          </div>
+        </div>
+        <canvas id="failureChart"></canvas>
+      </article>
+
+      <article class="panel glass chart-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Population mix</p>
+            <h3>Machine type distribution</h3>
+          </div>
+        </div>
+        <canvas id="typeChart"></canvas>
+      </article>
+
+      <article class="panel glass chart-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Model performance</p>
+            <h3>Validation vs test metrics</h3>
+          </div>
+        </div>
+        <canvas id="metricsChart"></canvas>
+      </article>
+
+      <article class="panel glass chart-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Sensor signature</p>
+            <h3>Healthy and failure profile</h3>
+          </div>
+        </div>
+        <canvas id="profileChart"></canvas>
+      </article>
+
+      <article class="panel glass chart-panel wide">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Scatter sample</p>
+            <h3>Air temperature vs torque</h3>
+          </div>
+        </div>
+        <canvas id="scatterChart"></canvas>
+      </article>
+
+      <article class="panel glass feature-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Model explainability</p>
+            <h3>Top feature signals</h3>
+          </div>
+        </div>
+        <div id="featureImportance" class="feature-bars"></div>
+      </article>
+    </section>
+
+    <section id="logs" class="content-grid reveal">
+      <article class="panel glass chart-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Prediction log mix</p>
+            <h3>LOW / MEDIUM / HIGH</h3>
+          </div>
+          <span class="subtle-pill" id="logCountPill">0 logs</span>
+        </div>
+        <canvas id="logRiskChart"></canvas>
+      </article>
+
+      <article class="panel glass log-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Prediction log stream</p>
+            <h3>Latest logged predictions</h3>
+          </div>
+        </div>
+        <div class="log-table-wrap">
+          <table class="log-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Risk</th>
+                <th>Prob.</th>
+                <th>Prediction</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="predictionLogBody"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="insight-strip reveal">
+      <article class="glass insight-card">
+        <p class="eyebrow">Snapshot</p>
+        <div id="snapshotText" class="snapshot-text"></div>
+      </article>
+      <article class="glass insight-card">
+        <p class="eyebrow">Why this works</p>
+        <ul class="bullet-list">
+          <li>Animated interface with responsive cards and chart transitions.</li>
+          <li>Live FastAPI prediction calls with structured JSON validation.</li>
+          <li>Model analytics derived from the actual AI4I 2020 dataset.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Core data + ML stack
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.1
+scikit-learn==1.5.1
+joblib==1.4.2
+
+# API layer
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.8.2
+
+# Optional but supported by the training script when installed.
+# The training code will skip XGBoost automatically if this package is absent.
+xgboost==2.1.1
