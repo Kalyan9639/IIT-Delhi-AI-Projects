@@ -33,15 +33,15 @@ PredictGuard AI brings those pieces together in one workflow:
 
 ### Home Page
 
-![Home Page](AI%20Powered%20Predictive%20Maintainance%20for%20IoT%20Devices/Output%20Images/Home%20Page.jpeg)
+![Home Page](Output%20Images/Home%20Page.jpeg)
 
 ### Prediction Flow
 
-![Making Prediction](AI%20Powered%20Predictive%20Maintainance%20for%20IoT%20Devices/Output%20Images/Making%20Prediction.jpeg)
+![Making Prediction](Output%20Images/Making%20Prediction.jpeg)
 
 ### Latest Metrics
 
-![Latest Metrics](AI%20Powered%20Predictive%20Maintainance%20for%20IoT%20Devices/Output%20Images/Latest%20Metrics.jpeg)
+![Latest Metrics](Output%20Images/Latest%20Metrics.jpeg)
 
 ## Architecture
 
