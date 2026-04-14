@@ -1,0 +1,32 @@
+{
+    "method": "undersample",
+    "epochs": 10,
+    "test_samples": {
+        "normal": 234,
+        "pneumonia": 390,
+        "total": 624
+    },
+    "overall": {
+        "accuracy": 0.859,
+        "macro_precision": 0.8953,
+        "macro_recall": 0.8162,
+        "macro_f1_score": 0.8359,
+        "weighted_precision": 0.8771,
+        "weighted_recall": 0.859,
+        "weighted_f1_score": 0.8513
+    },
+    "per_class": {
+        "NORMAL": {
+            "precision": 0.9679,
+            "recall": 0.6453,
+            "f1_score": 0.7744,
+            "support": 234
+        },
+        "PNEUMONIA": {
+            "precision": 0.8226,
+            "recall": 0.9872,
+            "f1_score": 0.8974,
+            "support": 390
+        }
+    }
+}
