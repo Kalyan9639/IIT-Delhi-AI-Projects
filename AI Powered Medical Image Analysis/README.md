@@ -7,7 +7,7 @@
 
 NexusMed AI is an industry-grade, end-to-end artificial intelligence application designed to detect Pneumonia from chest X-ray radiographs. The exact decision-making process of the model is fully transparent through **Grad-CAM Attention Maps**, making it a highly reliable and explainable medical tool. 
 
-Coupled with a beautifully designed, hardware-accelerated "Billion-Dollar Aesthetic" user interface, NexusMed AI seamlessly bridges complex deep learning models with accessible medical diagnostics.
+Coupled with a beautifully designed user interface, NexusMed AI seamlessly bridges complex deep learning models with accessible medical diagnostics.
 
 ---
 
