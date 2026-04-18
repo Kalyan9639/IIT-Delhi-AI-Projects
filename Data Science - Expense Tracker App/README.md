@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-![Last Commit](https://img.shields.io/github/last-commit/Kalyan9639/IIT-Delhi-AI-Projects/Data%20Science%20-%20Expense%20Tracker%20App)
+
 
 > A data-driven FinTech application for real-time expense tracking, automated categorization, and visual spending analytics.
 
