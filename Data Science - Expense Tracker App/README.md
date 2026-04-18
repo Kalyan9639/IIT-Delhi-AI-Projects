@@ -1,7 +1,7 @@
 # 💰 Expense Tracker - Financial Intelligence Dashboard
 
 <p align="center">
-![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
+<b>![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)</b>
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.56-FF4B4B?logo=streamlit&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success)
