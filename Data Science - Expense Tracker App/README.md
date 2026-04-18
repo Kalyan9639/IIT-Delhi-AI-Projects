@@ -1,11 +1,12 @@
 # 💰 Expense Tracker - Financial Intelligence Dashboard
 
+<palign="center">
 ![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.56-FF4B4B?logo=streamlit&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-
+</p>
 
 > A data-driven FinTech application for real-time expense tracking, automated categorization, and visual spending analytics.
 
