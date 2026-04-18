@@ -212,30 +212,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📧 Contact
-
-**Author**: M. Kalyan Sai Prasad
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/kalyan-sai-prasad)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Kalyan9639)
-
----
-
-## 🙏 Acknowledgments
-
-- [Streamlit](https://streamlit.io/) - For the amazing dashboard framework
-- [Plotly](https://plotly.com/) - For interactive visualization capabilities
-- [Pandas](https://pandas.pydata.org/) - For powerful data manipulation
-
----
 
 <p align="center">
   <b>Made with ❤️ for Personal Finance Management</b>
