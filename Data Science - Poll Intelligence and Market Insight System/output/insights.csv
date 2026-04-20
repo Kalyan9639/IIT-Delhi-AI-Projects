@@ -1,0 +1,9 @@
+Category,Title,Finding,Implication,Confidence,Segment
+Brand Preference,Overall Market Share,Sony dominates with 62.2% market share,The market shows clear preference for Sony. Marketing efforts should reinforce this position.,High,Overall
+Demographics,Education-Based Preferences,Less than High School: Sony (62.7%) | High School Degree: Sony (62.4%) | 4-Year College Degree: Sony (62.4%),Tailor messaging based on education level. Higher education segments may respond to technical specs.,Medium,Education Level
+Geography,Regional Market Strength,"Strongest region: Pacific (65.2%), Weakest: Mountain (60.0%)",Focus expansion efforts in Mountain. Maintain dominance in Pacific.,High,Regions
+Economics,Income-Neutral Preference,Brand preference is consistent across income levels,Value proposition resonates equally across economic segments.,Medium,Income Levels
+Economics,Credit Availability Impact,"High credit users prefer Sony, low credit users prefer Sony",Financing options may influence purchase decisions.,Medium,Credit Levels
+Lifestyle,Car-Computer Brand Correlation,Mitsubishi: Sony (60.1%) | Subaru: Sony (63.5%) | Honda: Sony (62.8%),Car brand preferences may indicate lifestyle segments for targeted marketing.,Medium,Car Owners
+Market Position,Sony Strength,Sony holds dominant market position at 62.2%,Focus on retention and expansion. Maintain competitive advantage.,High,Overall
+Market Position,Acer Challenge,Acer trails market leader with 37.8% share,Aggressive marketing needed. Identify unique value propositions.,High,Overall
