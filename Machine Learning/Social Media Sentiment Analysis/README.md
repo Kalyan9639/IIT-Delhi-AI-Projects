@@ -33,8 +33,8 @@ The project follows a **Hybrid Cloud-Edge** workflow:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Kalyan9639/SentimentX.git
-cd SentimentX
+git clone https://github.com/Kalyan9639/IIT-Delhi-AI-Projects/tree/main/Machine%20Learning/Social%20Media%20Sentiment%20Analysis.git
+cd "IIT-Delhi-AI-Projects/tree/main/Machine%20Learning/Social%20Media%20Sentiment%20Analysis"
 ```
 
 ### 2. Install Dependencies
