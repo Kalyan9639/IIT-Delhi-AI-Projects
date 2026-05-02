@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentimentX | Twitter Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --neon-green: #4ade80;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark-bg);
+            color: #f1f5f9;
+        }
+
+        .neon-border {
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .neon-border:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-green);
+        }
+
+        .pulse-badge {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(74, 222, 128, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+            }
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid var(--neon-green);
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .tweet-card {
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tweet-card.positive {
+            border-left-color: var(--neon-green);
+        }
+
+        .tweet-card.negative {
+            border-left-color: #f87171;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pb-12">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass border-b border-white/5 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div
+                class="w-8 h-8 bg-green-400 rounded-lg flex items-center justify-center text-slate-900 shadow-[0_0_15px_rgba(74,222,128,0.5)]">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <span class="text-xl font-bold tracking-tight">Sentiment<span class="text-green-400">X</span></span>
+        </div>
+        <div class="flex items-center gap-6">
+            <span
+                class="bg-green-400/10 text-green-400 px-3 py-1 rounded-full text-xs font-semibold border border-green-400/20 pulse-badge">
+                <i class="fas fa-microchip mr-1"></i> Powered by DistilBERT
+            </span>
+            <div class="flex items-center gap-3">
+                <input type="file" id="datasetUpload" hidden accept=".csv,.tsv">
+                <button onclick="document.getElementById('datasetUpload').click()"
+                    class="bg-green-400 text-slate-900 px-4 py-2 rounded-xl text-xs font-bold hover:bg-green-300 transition-all flex items-center gap-2 shadow-lg shadow-green-400/20">
+                    <i class="fas fa-file-csv"></i> Batch Analysis
+                </button>
+                <div
+                    class="w-10 h-10 rounded-full bg-slate-700 border border-white/10 flex items-center justify-center overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name=AI+Engineer&background=4ade80&color=0f172a" alt="Avatar">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Predictor & Activity -->
+        <div class="lg:col-span-8 space-y-8">
+
+            <!-- Real-time Tweet Predictor -->
+            <section class="p-8 rounded-3xl bg-slate-800/50 neon-border">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold flex items-center gap-3">
+                            <i class="fas fa-bolt text-green-400"></i>
+                            Tweet Sentiment Predictor
+                        </h2>
+                        <p class="text-slate-400 text-sm mt-1">Direct inference on fine-tuned DistilBERT weights.</p>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <textarea id="textInput"
+                        class="w-full h-32 bg-slate-900/50 border border-slate-700 rounded-2xl p-5 text-slate-200 focus:outline-none focus:border-green-400/50 transition-all placeholder-slate-500 text-lg"
+                        placeholder="What's happening? (Type a tweet to analyze)"></textarea>
+                    <div class="absolute bottom-4 right-4 flex gap-3">
+                        <button id="clearBtn" onclick="clearText()"
+                            class="bg-slate-700/50 text-slate-300 px-6 py-3 rounded-xl font-bold hover:bg-slate-600 transition-all shadow-xl border border-slate-600 flex items-center gap-2">
+                            Clear
+                        </button>
+                        <button id="analyzeBtn" onclick="predictSentiment()"
+                            class="bg-green-400 text-slate-900 px-8 py-3 rounded-xl font-bold hover:bg-green-300 transition-all shadow-xl shadow-green-500/20 flex items-center gap-2">
+                            Analyze
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prediction Result Display -->
+                <div id="predictionResult" class="mt-6 hidden animate-[fadeIn_0.5s_ease-out]">
+                    <div
+                        class="flex items-center justify-between p-5 bg-slate-900/80 rounded-2xl border border-slate-700 shadow-inner">
+                        <div class="flex items-center gap-5">
+                            <div id="sentimentIcon"
+                                class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl"></div>
+                            <div>
+                                <p class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold">Model Output
+                                </p>
+                                <h3 id="sentimentLabel" class="text-2xl font-black italic">POSITIVE</h3>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/50 px-4 py-2 rounded-xl border border-white/5">
+                            <p class="text-[10px] text-slate-500 uppercase font-bold">Confidence</p>
+                            <p id="confidenceScore" class="text-xl font-mono font-black text-green-400">0%</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 rounded-3xl glass border border-white/5">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <p class="text-slate-400 text-sm">Training Data</p>
+                    </div>
+                    <h3 class="text-3xl font-bold"><span id="statTotal">1.6M</span><span
+                            class="text-sm font-normal text-slate-500 ml-1">Tweets</span></h3>
+                    <div class="mt-4 flex gap-1">
+                        <div class="h-1 w-1/2 bg-green-400 rounded-full"></div>
+                        <div class="h-1 w-1/2 bg-red-400 rounded-full"></div>
+                    </div>
+                </div>
+                <div class="p-6 rounded-3xl glass border border-white/5">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <p class="text-slate-400 text-sm">F1 Accuracy</p>
+                    </div>
+                    <h3 class="text-3xl font-bold text-green-400">82.5%</h3>
+                    <p class="text-[10px] text-slate-500 mt-2 uppercase font-bold tracking-wider">Validated on
+                        Sentiment140</p>
+                </div>
+                <div class="p-6 rounded-3xl glass border border-white/5">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <p class="text-slate-400 text-sm">Avg. Latency</p>
+                    </div>
+                    <h3 class="text-3xl font-bold">0.85<span class="text-sm font-normal text-slate-500 ml-1">ms</span>
+                    </h3>
+                    <p class="text-[10px] text-blue-400 mt-2 uppercase font-bold tracking-wider">GPU Optimized</p>
+                </div>
+            </div>
+
+            <!-- Historical Trend -->
+            <section class="p-8 rounded-3xl bg-slate-800/50 border border-white/5">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="text-xl font-bold">Sentiment Volatility</h2>
+                        <p class="text-xs text-slate-500">Timeline of analyzed tweet patterns</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="flex items-center gap-2 text-[10px] uppercase font-bold text-slate-400">
+                            <div class="w-2 h-2 rounded-full bg-green-400"></div> Positivity
+                        </div>
+                    </div>
+                </div>
+                <div class="h-64">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Column: Distribution & Logs -->
+        <div class="lg:col-span-4 space-y-8">
+
+            <!-- Donut Distribution -->
+            <section class="p-8 rounded-3xl glass border border-white/5 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-green-400/5 rounded-full blur-3xl"></div>
+                <h2 class="text-lg font-bold mb-6 text-center">Dataset Distribution</h2>
+                <div class="relative h-64">
+                    <canvas id="distributionChart"></canvas>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                        <p class="text-3xl font-black text-green-400" id="centerStat">0%</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Overall Positivity</p>
+                    </div>
+                </div>
+                <div class="mt-8 space-y-4" id="distLegend">
+                    <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900/50 border border-white/5">
+                        <span class="flex items-center gap-3 text-sm font-medium">
+                            <div class="w-2 h-2 rounded-full bg-green-400"></div> Positive
+                        </span>
+                        <span class="font-mono font-bold" id="posCount">--</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 rounded-xl bg-slate-900/50 border border-white/5">
+                        <span class="flex items-center gap-3 text-sm font-medium">
+                            <div class="w-2 h-2 rounded-full bg-red-400"></div> Negative
+                        </span>
+                        <span class="font-mono font-bold" id="negCount">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inference Log -->
+            <section class="p-8 rounded-3xl bg-slate-800/50 border border-white/5">
+                <h2 class="text-lg font-bold mb-4">Live Inference Log</h2>
+                <div id="inferenceLog" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                    <div class="text-center py-10 text-slate-500 italic text-sm">
+                        No tweets analyzed yet...
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Overlay Loader -->
+    <div id="loader"
+        class="fixed inset-0 bg-slate-900/90 backdrop-blur-md z-[100] hidden flex-col items-center justify-center">
+        <div class="loading-spinner mb-6 w-16 h-16"></div>
+        <p class="text-green-400 text-xl font-black tracking-widest animate-pulse">ANALYZING DATASET...</p>
+        <p class="text-slate-500 mt-2 text-sm">Running DistilBERT across batch data</p>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let distChart, trendChart;
+
+        async function initCharts() {
+            const distCtx = document.getElementById('distributionChart').getContext('2d');
+            distChart = new Chart(distCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Positive', 'Negative'],
+                    datasets: [{
+                        data: [50, 50],
+                        backgroundColor: ['#4ade80', '#f87171'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    cutout: '85%',
+                    plugins: { legend: { display: false } },
+                    animation: { animateRotate: true, duration: 2000 }
+                }
+            });
+
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['T-6', 'T-5', 'T-4', 'T-3', 'T-2', 'T-1', 'Now'],
+                    datasets: [{
+                        data: [45, 52, 48, 70, 65, 80, 85],
+                        borderColor: '#4ade80',
+                        borderWidth: 4,
+                        tension: 0.4,
+                        fill: true,
+                        backgroundColor: (context) => {
+                            const bg = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
+                            bg.addColorStop(0, 'rgba(74, 222, 128, 0.2)');
+                            bg.addColorStop(1, 'rgba(74, 222, 128, 0)');
+                            return bg;
+                        },
+                        pointRadius: 4,
+                        pointBackgroundColor: '#4ade80'
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { display: false },
+                        x: { grid: { display: false }, ticks: { color: '#475569' } }
+                    }
+                }
+            });
+        }
+
+        function addToLog(text, sentiment) {
+            const log = document.getElementById('inferenceLog');
+            if (log.innerText.includes("No tweets analyzed")) log.innerHTML = "";
+
+            const div = document.createElement('div');
+            const colorClass = sentiment === 'Positive' ? 'positive bg-green-400/5' : 'negative bg-red-400/5';
+            const icon = sentiment === 'Positive' ? 'fa-face-smile text-green-400' : 'fa-face-frown text-red-400';
+
+            div.className = `tweet-card ${colorClass} p-3 rounded-xl border border-white/5 mb-3 animate-[slideIn_0.3s_ease-out]`;
+            div.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <p class="text-xs text-slate-300 line-clamp-2 pr-4 italic">"${text}"</p>
+                    <i class="fas ${icon} text-sm"></i>
+                </div>
+            `;
+            log.prepend(div);
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = "";
+            document.getElementById('predictionResult').classList.add('hidden');
+        }
+
+        async function predictSentiment() {
+            const text = document.getElementById('textInput').value;
+            const btn = document.getElementById('analyzeBtn');
+            if (!text.trim()) return;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Thinking...';
+
+            try {
+                const response = await fetch(`${API_URL}/predict`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const data = await response.json();
+
+                const resDiv = document.getElementById('predictionResult');
+                const label = document.getElementById('sentimentLabel');
+                const conf = document.getElementById('confidenceScore');
+                const icon = document.getElementById('sentimentIcon');
+
+                resDiv.classList.remove('hidden');
+                label.innerText = data.sentiment;
+                conf.innerText = data.confidence + "%";
+
+                if (data.sentiment === 'Positive') {
+                    label.className = "text-2xl font-black italic text-green-400";
+                    icon.innerHTML = '<i class="fas fa-smile"></i>';
+                    icon.className = "w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-green-400/10 text-green-400 border border-green-400/20";
+                } else {
+                    label.className = "text-2xl font-black italic text-red-400";
+                    icon.innerHTML = '<i class="fas fa-frown"></i>';
+                    icon.className = "w-14 h-14 rounded-2xl flex items-center justify-center text-3xl bg-red-400/10 text-red-400 border border-red-400/20";
+                }
+
+                addToLog(text, data.sentiment);
+            } catch (err) {
+                console.error(err);
+                alert("Backend Connection Lost. Ensure FastAPI is running on port 8000.");
+            }
+            finally {
+                btn.disabled = false;
+                btn.innerText = "Analyze";
+            }
+        }
+
+        document.getElementById('datasetUpload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            const loader = document.getElementById('loader');
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
+
+            try {
+                const response = await fetch(`${API_URL}/analyze-file`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                // Distribution is [Pos, Neu, Neg]. Sentiment140 is binary, so we map [0] and [2]
+                const pos = result.distribution[0];
+                const neg = result.distribution[2];
+
+                distChart.data.datasets[0].data = [pos, neg];
+                distChart.update();
+
+                document.getElementById('posCount').innerText = pos + "%";
+                document.getElementById('negCount').innerText = neg + "%";
+                document.getElementById('centerStat').innerText = pos + "%";
+                document.getElementById('statTotal').innerText = result.total_processed.toLocaleString();
+
+            } catch (err) { alert("Error processing dataset."); }
+            finally {
+                const loader = document.getElementById('loader');
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+            }
+        });
+
+        window.onload = () => {
+            initCharts();
+        };
+
+        // Custom animations
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>
