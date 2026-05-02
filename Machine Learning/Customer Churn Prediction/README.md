@@ -175,7 +175,7 @@ We welcome contributions! Please feel free to submit a Pull Request.
 ## Support
 
 For issues, feature requests, or questions:
-- Create an [Issue]([https://github.com/Kalyan9639/IIT-Delhi-AI-Projects/Machine%20Learning/Customer%20Churn%20Prediction/issues](https://github.com/Kalyan9639/IIT-Delhi-AI-Projects/issues))
+- Create an [Issue](https://github.com/Kalyan9639/IIT-Delhi-AI-Projects/issues)
 
 
 
