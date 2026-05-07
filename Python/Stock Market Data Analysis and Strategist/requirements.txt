@@ -1,0 +1,10 @@
+pandas
+numpy
+scipy
+yfinance
+feedparser
+mospi-esankhyiki
+ollama
+fastapi
+uvicorn
+requests

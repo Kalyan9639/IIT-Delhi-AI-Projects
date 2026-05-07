@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat-Risk Pulse | Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --accent-blue: #38bdf8;
+            --accent-red: #ef4444;
+            --accent-green: #22c55e;
+            --neural-pulse: rgba(56, 189, 248, 0.4);
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Neural Link Animation Classes */
+        .data-stream {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+            width: 100%;
+            z-index: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        @keyframes flow {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+        
+        .active-flow {
+            animation: flow 2s linear infinite;
+        }
+
+        .ai-processing {
+            animation: pulse-border 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.2); }
+            50% { border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 0 15px 2px rgba(56, 189, 248, 0.4); }
+            100% { border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.2); }
+        }
+
+        /* Modal Guide */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .pulse-green { background-color: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+        .pulse-red { background-color: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
+        .pulse-yellow { background-color: #eab308; box-shadow: 0 0 8px #eab308; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <!-- Header -->
+    <header class="max-w-7xl mx-auto mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-white flex items-center gap-3">
+                <i class="fas fa-shield-halved text-sky-400"></i>
+                Bharat-Risk Pulse
+            </h1>
+            <p class="text-slate-400 text-sm mt-1">AI-Powered Macro Risk Monitoring System</p>
+        </div>
+        <div class="flex gap-4">
+            <button onclick="openGuide()" class="text-slate-400 hover:text-white transition px-2">
+                <i class="far fa-circle-question text-xl"></i>
+            </button>
+            <button id="refresh-btn" onclick="refreshData()" class="bg-sky-600 hover:bg-sky-500 px-6 py-2 rounded-lg font-medium transition flex items-center gap-2 relative overflow-hidden group">
+                <span class="relative z-10 flex items-center gap-2">
+                    <i class="fas fa-sync-alt" id="refresh-icon"></i> Refresh Intelligence
+                </span>
+            </button>
+            <div class="glass-card px-4 py-2 flex items-center gap-2">
+                <span class="status-dot pulse-green" id="engine-status"></span>
+                <span class="text-xs font-mono uppercase tracking-wider text-slate-300" id="engine-status-text">Cloud Engine Online</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 relative">
+        <!-- Neural Link SVG Container (Background) -->
+        <div id="neural-container" class="absolute inset-0 pointer-events-none hidden lg:block">
+            <!-- Animated SVG paths will be injected here during refresh -->
+            <svg id="neural-svg" width="100%" height="100%" class="opacity-30"></svg>
+        </div>
+
+        <div class="lg:col-span-2 flex flex-col gap-6">
+            <!-- Bell Curve Analytics -->
+            <div class="glass-card p-6" id="curve-card">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-lg font-semibold flex items-center gap-2">
+                        <i class="fas fa-chart-area text-sky-400"></i> Market Pulse Distribution
+                    </h2>
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider text-slate-400">
+                            <span class="h-2 w-2 rounded-full bg-red-500"></span> Live Signal
+                        </div>
+                        <select id="ticker-select" onchange="loadCurve()" class="bg-slate-700 text-sm rounded px-2 py-1 outline-none border border-slate-600">
+                            <option value="TCS.NS">TCS.NS (Tech Benchmark)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Chart Container -->
+                <div class="w-full">
+                    <div class="h-[280px] w-full">
+                        <canvas id="curveChart"></canvas>
+                    </div>
+                    <!-- Moved Labels outside the absolute positioning to prevent overlay -->
+                    <div class="mt-4 flex justify-between px-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                        <span class="flex items-center gap-1"><i class="fas fa-arrow-left"></i> Unusual Stress</span>
+                        <span>Baseline (Stability)</span>
+                        <span class="flex items-center gap-1">Unusual Momentum <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <div id="anomaly-alert" class="hidden mt-6 p-3 rounded bg-red-500/10 border border-red-500/50 text-red-400 text-sm flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>MACRO ANOMALY:</strong> Statistical movement suggests an external shock.
+                </div>
+            </div>
+
+            <!-- AI Assessment (The Brain) -->
+            <div class="glass-card p-6 bg-gradient-to-br from-slate-800 to-slate-900 border-l-4 border-l-purple-500/50" id="ai-card">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold flex items-center gap-2">
+                        <i class="fas fa-microchip text-purple-400"></i> Cognitive Analysis
+                    </h2>
+                    <span id="risk-badge" class="px-3 py-1 rounded-full text-xs font-bold uppercase bg-slate-500/20 text-slate-400 border border-slate-500/50">
+                        Idle
+                    </span>
+                </div>
+                <div id="ai-brief" class="text-xl md:text-2xl font-light text-slate-100 italic mb-4 leading-relaxed">
+                    "Connect to start real-time reasoning..."
+                </div>
+                <div id="action-box" class="p-4 rounded-lg bg-black/30 border-l-4 border-sky-500 transform transition-all duration-500">
+                    <span class="text-xs uppercase font-bold text-sky-400 block mb-1">Strategist's Directive</span>
+                    <p id="ai-action" class="text-lg text-white font-medium opacity-60">Awaiting fresh market data stream.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-6">
+            <!-- MOSPI Indicators -->
+            <div class="glass-card p-6" id="mospi-card">
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-landmark text-amber-400"></i> Macro Sensors (MOSPI)
+                </h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-3 bg-black/20 rounded relative overflow-hidden sensor-node" id="node-cpi">
+                        <div>
+                            <span class="text-xs text-slate-400 uppercase">CPI (Retail Inflation)</span>
+                            <div class="text-xl font-bold" id="cpi-val">--%</div>
+                        </div>
+                        <i class="fas fa-shopping-basket text-slate-600"></i>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-black/20 rounded sensor-node" id="node-wpi">
+                        <div>
+                            <span class="text-xs text-slate-400 uppercase">WPI (Fuel Index)</span>
+                            <div class="text-xl font-bold" id="wpi-val">---</div>
+                        </div>
+                        <i class="fas fa-gas-pump text-slate-600"></i>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-black/20 rounded sensor-node" id="node-iip">
+                        <div>
+                            <span class="text-xs text-slate-400 uppercase">Tech Sector GVA</span>
+                            <div class="text-xl font-bold" id="iip-val">--%</div>
+                        </div>
+                        <i class="fas fa-microchip text-slate-600"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Feed -->
+            <div class="glass-card p-6 flex-grow sensor-node" id="node-news">
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i class="fas fa-newspaper text-emerald-400"></i> Sentiment Feed
+                </h2>
+                <ul id="news-list" class="space-y-3 text-sm">
+                    <li class="text-slate-500">No signals detected.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Guide Modal -->
+    <div id="guide-modal" class="fixed inset-0 z-[100] modal-overlay hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-2xl w-full p-8 relative">
+            <button onclick="closeGuide()" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fas fa-times text-xl"></i></button>
+            <h2 class="text-2xl font-bold text-sky-400 mb-6 flex items-center gap-3">
+                <i class="fas fa-book-open"></i> User Guide
+            </h2>
+            <div class="space-y-6 text-slate-300">
+                <section>
+                    <h3 class="text-white font-semibold mb-2">1. The Market Pulse (Bell Curve)</h3>
+                    <p class="text-sm">This shows how TCS is moving today compared to the last 5 days. If the <span class="text-red-500 font-bold">Red Dot</span> is in the center, the market is stable. If it moves to the extreme edges, something unusual is happening.</p>
+                </section>
+                <section>
+                    <h3 class="text-white font-semibold mb-2">2. Macro Sensors</h3>
+                    <p class="text-sm">We monitor Indian Government data (MOSPI). High inflation (CPI > 6%) or high Fuel costs usually cause stock prices to drop later. Red icons mean high risk.</p>
+                </section>
+                <section>
+                    <h3 class="text-white font-semibold mb-2">3. Cognitive Analysis</h3>
+                    <p class="text-sm">Our Cloud AI reads the headlines and links them to the math. It tells you exactly "What is happening" and "What to do" in plain English, so you don't have to be a finance expert.</p>
+                </section>
+            </div>
+            <button onclick="closeGuide()" class="mt-8 w-full bg-sky-600 py-3 rounded-lg font-bold">Got it!</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://localhost:8000/api/v1";
+        let curveChart = null;
+
+        function startNeuralAnimation() {
+            const svg = document.getElementById('neural-svg');
+            const aiCard = document.getElementById('ai-card');
+            const nodes = document.querySelectorAll('.sensor-node');
+            
+            aiCard.classList.add('ai-processing');
+            document.getElementById('neural-container').classList.remove('hidden');
+            svg.innerHTML = ''; // Clear previous
+
+            const aiRect = aiCard.getBoundingClientRect();
+            
+            nodes.forEach(node => {
+                const nodeRect = node.getBoundingClientRect();
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                
+                // Calculate curve points
+                const startX = nodeRect.left;
+                const startY = nodeRect.top + nodeRect.height/2;
+                const endX = aiRect.right;
+                const endY = aiRect.top + aiRect.height/2;
+                
+                const d = `M ${startX} ${startY} C ${startX - 100} ${startY}, ${endX + 100} ${endY}, ${endX} ${endY}`;
+                
+                path.setAttribute("d", d);
+                path.setAttribute("fill", "none");
+                path.setAttribute("stroke", "#38bdf8");
+                path.setAttribute("stroke-width", "2");
+                path.setAttribute("stroke-dasharray", "10, 10");
+                path.style.animation = "neural-flow 2s linear infinite";
+                
+                svg.appendChild(path);
+            });
+        }
+
+        function stopNeuralAnimation() {
+            document.getElementById('ai-card').classList.remove('ai-processing');
+            document.getElementById('neural-container').classList.add('hidden');
+        }
+
+        async function refreshData() {
+            const btnIcon = document.getElementById('refresh-icon');
+            const statusDot = document.getElementById('engine-status');
+            
+            btnIcon.classList.add('fa-spin');
+            statusDot.className = 'status-dot pulse-yellow';
+            
+            startNeuralAnimation();
+            
+            try {
+                const response = await fetch(`${API_BASE}/risk-profile`);
+                if (!response.ok) throw new Error('API Unavailable');
+                
+                const data = await response.json();
+                updateUI(data);
+                loadCurve();
+                
+                statusDot.className = 'status-dot pulse-green';
+            } catch (error) {
+                console.error(error);
+                statusDot.className = 'status-dot pulse-red';
+            } finally {
+                btnIcon.classList.remove('fa-spin');
+                setTimeout(stopNeuralAnimation, 1000); // Visual flair
+            }
+        }
+
+        function updateUI(data) {
+            document.getElementById('ai-brief').innerText = data.summary?.brief ? `"${data.summary.brief}"` : "Processing signals...";
+            document.getElementById('ai-action').innerText = data.summary?.action || "Awaiting decision...";
+            document.getElementById('ai-action').parentElement.style.opacity = "1";
+            
+            const badge = document.getElementById('risk-badge');
+            badge.innerText = data.summary?.risk_level || 'Idle';
+            badge.className = `px-3 py-1 rounded-full text-xs font-bold uppercase border ${
+                data.summary?.risk_level === 'High' ? 'bg-red-500/20 text-red-400 border-red-500/50' : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50'
+            }`;
+
+            const macro = data.macro_indicators || {};
+            document.getElementById('cpi-val').innerText = `${macro.cpi_inflation || 0}%`;
+            document.getElementById('wpi-val').innerText = macro.wpi_fuel_index || 0;
+            document.getElementById('iip-val').innerText = `${macro.iip_tech_growth || 0}%`;
+
+            const newsList = document.getElementById('news-list');
+            newsList.innerHTML = data.recent_news.map(news => `
+                <li class="border-b border-slate-700/50 pb-2 hover:text-sky-400 transition cursor-pointer">
+                    <a href="${news.link}" target="_blank" class="block">
+                        <span class="block">${news.title}</span>
+                        <span class="text-[9px] uppercase opacity-50"><i class="fas fa-external-link-alt"></i> Source</span>
+                    </a>
+                </li>
+            `).join('');
+        }
+
+        async function loadCurve() {
+            const ticker = document.getElementById('ticker-select').value;
+            const res = await fetch(`${API_BASE}/analytics/curve?ticker=${ticker}`);
+            const data = await res.json();
+            
+            if (curveChart) curveChart.destroy();
+            const ctx = document.getElementById('curveChart').getContext('2d');
+            
+            document.getElementById('anomaly-alert').classList.toggle('hidden', !data.is_anomaly);
+
+            curveChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.curve.x.map(v => v.toFixed(4)),
+                    datasets: [{
+                        data: data.curve.y,
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                        fill: true, tension: 0.4, pointRadius: 0
+                    },
+                    {
+                        data: data.curve.x.map(x => (Math.abs(x - data.curve.current_x) < 0.0001) ? Math.max(...data.curve.y) : null),
+                        borderColor: '#ef4444', borderWidth: 3, pointRadius: 6, pointBackgroundColor: '#ef4444', showLine: false, spanGaps: true
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    scales: { x: { display: false }, y: { display: false } }
+                }
+            });
+        }
+
+        function openGuide() { document.getElementById('guide-modal').classList.remove('hidden'); }
+        function closeGuide() { document.getElementById('guide-modal').classList.add('hidden'); }
+
+        window.onload = refreshData;
+    </script>
+    <style>
+        @keyframes neural-flow {
+            to { stroke-dashoffset: -20; }
+        }
+    </style>
+</body>
+</html>
