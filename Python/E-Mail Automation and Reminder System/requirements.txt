@@ -1,0 +1,9 @@
+pandas
+feedparser
+trafilatura
+requests
+fastapi
+uvicorn
+SQLAlchemy
+apscheduler
+ollama
