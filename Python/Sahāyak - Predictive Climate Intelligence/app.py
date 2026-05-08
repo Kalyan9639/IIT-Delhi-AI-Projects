@@ -116,7 +116,7 @@ def update_location(zipcode):
 # --- Header & Search Hero Section ---
 st.markdown("""
 <div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
-    <h1 style="font-family: 'Sora', sans-serif; font-size: 3rem; font-weight: 700; color: #00dce5; margin-bottom: 1rem; letter-spacing: -0.04em;">Predictive Climate Intelligence</h1>
+    <h1 style="font-family: 'Sora', sans-serif; font-size: 3rem; font-weight: 700; color: #00dce5; margin-bottom: 1rem; letter-spacing: -0.04em;">Sahāyak - Predictive Climate Intelligence</h1>
     <p style="font-family: 'Inter', sans-serif; font-size: 1.125rem; color: #b9caca; max-width: 600px; margin: 0 auto;">Enter your global PIN or coordinates to access institutional-grade risk forecasting and physical parameter data.</p>
 </div>
 """, unsafe_allow_html=True)
