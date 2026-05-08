@@ -1,0 +1,50 @@
+The Problem:
+Extreme weather in India is a "Compound Risk" event. Standard tools provide isolated numbers—like 42°C or 300 AQI—but they don't explain how these factors multiply danger. For instance, high humidity prevents sweat from evaporating, making a 40°C day lethal, while poor AQI adds respiratory stress. Furthermore, people often rely on city-wide forecasts that ignore local Urban Heat Islands and Elevation differences (which affect both temperature and flood potential).
+
+The Solution:
+Sahāyak is an AI-driven Climate Advisory Engine. It uses FastAPI to fetch real-time weather, elevation, and pollution data. Instead of just displaying raw graphs, it uses a local Ollama (gpt-oss:20b-cloud) model to act as a "Risk Translator." It calculates scientific indices like the Wet Bulb Temperature and provides non-authoritative, advisory safety briefings that help Indian citizens navigate their specific neighborhood's climate reality.
+
+🏗️ Step-by-Step Execution Plan
+Step 1: Location Resolution (Geocoding)
+Task: Create a FastAPI endpoint that takes a zipcode (PIN code).
+
+Action: Call geocoding-api.open-meteo.com.
+
+Result: Store latitude, longitude, and name (City).
+
+Step 2: The "Big Pull" (Weather + History + Elevation)
+Task: Fetch all physical parameters in a single request to save credits.
+
+Action: Call api.open-meteo.com/v1/forecast with these params:
+
+hourly=temperature_2m,relative_humidity_2m,precipitation
+
+past_days=1 (for the 24-hour graph)
+
+elevation=true (for terrain-aware risk)
+
+current_weather=true
+
+Step 3: Pollution Monitoring
+Task: Get real-time AQI.
+
+Action: Call api.waqi.info/feed/geo/:lat;:lng/.
+
+Default: If no Lat/Long is provided, it defaults to the Hyderabad station.
+
+Step 4: Risk Logic Calculation (The Math)
+Task: Your Python code calculates the Wet Bulb Temperature (using the Stull formula) and the Heat Index.
+
+Logic: If Wet_Bulb > 29°C or AQI > 200, the system flags a "Compound Risk" state.
+
+Step 5: The Ollama Inference (The Brain)
+Task: Send a JSON summary of the data to gpt-oss:20b-cloud.
+
+Prompt Style: "Given a Wet Bulb Temp of 30°C and AQI of 250 in a high-elevation area of Hyderabad, provide a brief, helpful advisory regarding physical exertion and air safety."
+
+Step 6: Dashboard Visualization (Streamlit/Next.js)
+Graph: A 24-hour line chart showing Temperature vs. Humidity.
+
+Risk Meter: A visual gauge showing the calculated safety level.
+
+Advisory Card: The text returned by your local Ollama model.

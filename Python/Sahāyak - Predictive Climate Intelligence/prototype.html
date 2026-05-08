@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sahāyak - AI Climate Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;family=Sora:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#feb700",
+                        "surface-container-low": "#191c1e",
+                        "surface-container-lowest": "#0b0f10",
+                        "surface-variant": "#323537",
+                        "tertiary-container": "#daddec",
+                        "outline": "#849495",
+                        "primary-fixed-dim": "#00dce5",
+                        "on-surface-variant": "#b9caca",
+                        "on-secondary-fixed": "#271900",
+                        "on-primary": "#003739",
+                        "on-surface": "#e0e3e5",
+                        "secondary-fixed": "#ffdea8",
+                        "primary": "#e9feff",
+                        "surface": "#101415",
+                        "surface-container-highest": "#323537",
+                        "tertiary-fixed-dim": "#c3c6d4",
+                        "inverse-primary": "#00696e",
+                        "on-error": "#690005",
+                        "on-background": "#e0e3e5",
+                        "primary-container": "#00f5ff",
+                        "tertiary": "#fbf9ff",
+                        "on-primary-container": "#006c71",
+                        "on-primary-fixed": "#002021",
+                        "tertiary-fixed": "#dfe2f1",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#5e4200",
+                        "surface-container": "#1d2022",
+                        "inverse-surface": "#e0e3e5",
+                        "inverse-on-surface": "#2d3133",
+                        "surface-container-high": "#272a2c",
+                        "primary-fixed": "#63f7ff",
+                        "on-tertiary-fixed-variant": "#434652",
+                        "surface-tint": "#00dce5",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#5d616e",
+                        "on-tertiary-fixed": "#171b26",
+                        "secondary-fixed-dim": "#ffba20",
+                        "on-secondary": "#412d00",
+                        "outline-variant": "#3a494a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#6b4b00",
+                        "background": "#101415",
+                        "on-tertiary": "#2c303b",
+                        "on-primary-fixed-variant": "#004f53",
+                        "surface-dim": "#101415",
+                        "surface-bright": "#363a3b",
+                        "secondary": "#ffdb9d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-page": "2rem",
+                        "stack-sm": "0.5rem",
+                        "element-gap": "1.5rem",
+                        "stack-md": "1rem",
+                        "section-gap": "5rem",
+                        "container-max": "1100px"
+                    },
+                    "fontFamily": {
+                        "display-xl": ["Sora"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Sora"],
+                        "body-lg": ["Inter"],
+                        "label-bold": ["Inter"],
+                        "headline-lg": ["Sora"],
+                        "mono-data": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-bold": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "mono-data": ["14px", { "lineHeight": "1", "letterSpacing": "0", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Base Background */
+        body {
+            background-color: #0B0F19; /* Deep Space Navy */
+        }
+        
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card-hover:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 220, 229, 0.3); /* Electric Cyan subtle hint */
+        }
+
+        /* Glow Accents */
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(0, 220, 229, 0.2);
+        }
+        
+        .glow-amber-pulse {
+            animation: pulse-amber 2s infinite;
+        }
+
+        @keyframes pulse-amber {
+            0% {
+                box-shadow: 0 0 0 0 rgba(254, 183, 0, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(254, 183, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(254, 183, 0, 0);
+            }
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md min-h-screen pt-[100px] pb-section-gap flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-center h-20 items-center px-margin-page max-w-[1100px] mx-auto bg-surface/5 backdrop-blur-[20px] border-b border-white/10">
+<div class="flex-1"></div>
+<div class="font-display-xl text-headline-lg font-bold text-primary-fixed-dim tracking-tighter cursor-pointer hover:text-primary-fixed transition-colors duration-300 active:scale-95 transition-transform">
+            Sahāyak
+        </div>
+<div class="flex-1 flex justify-end gap-4 text-primary-fixed-dim">
+<button class="hover:text-primary-fixed transition-colors duration-300 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">location_on</span>
+</button>
+<button class="hover:text-primary-fixed transition-colors duration-300 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Spine -->
+<main class="w-full max-w-container-max px-margin-page flex flex-col gap-section-gap">
+<!-- Search Hero Section -->
+<section class="flex flex-col items-center text-center mt-12 gap-stack-md">
+<h1 class="font-display-xl text-display-xl text-primary-fixed-dim">Predictive Climate Intelligence</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Enter your global PIN or coordinates to access institutional-grade risk forecasting and physical parameter data.</p>
+<div class="relative w-full max-w-xl mt-6 group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary-fixed-dim">search</span>
+<input class="w-full bg-[#05070A] border-b-2 border-outline-variant focus:border-primary-fixed-dim text-on-surface font-body-lg text-body-lg px-12 py-4 rounded-t-lg outline-none transition-colors glow-cyan placeholder-on-surface-variant/50" placeholder="Enter PIN code or location..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary-fixed-dim text-on-primary-fixed font-label-bold text-label-bold px-4 py-2 rounded uppercase tracking-widest hover:bg-primary-fixed transition-colors">Analyze</button>
+</div>
+</section>
+<!-- Bento Grid Layout for Data -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-element-gap">
+<!-- Compound Risk Level (Span 8) -->
+<section class="md:col-span-8 glass-card rounded-xl p-8 flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-8">
+<div>
+<h2 class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest mb-2">Compound Risk Vector</h2>
+<div class="font-display-xl text-display-xl text-secondary-container flex items-baseline gap-2">
+                            Critical <span class="font-headline-md text-headline-md text-on-surface-variant">Alert</span>
+</div>
+</div>
+<div class="w-4 h-4 rounded-full bg-secondary-container glow-amber-pulse mt-2"></div>
+</div>
+<div class="grid grid-cols-2 gap-stack-md mt-auto">
+<div class="bg-surface-container-highest/30 rounded-lg p-4 border border-white/5">
+<div class="font-label-bold text-label-bold text-on-surface-variant mb-1">WET BULB TEMP</div>
+<div class="font-mono-data text-headline-lg text-primary-fixed-dim">34.2°C</div>
+<div class="font-body-md text-body-md text-secondary-container mt-1">Exceeds safe limits</div>
+</div>
+<div class="bg-surface-container-highest/30 rounded-lg p-4 border border-white/5">
+<div class="font-label-bold text-label-bold text-on-surface-variant mb-1">AIR QUALITY INDEX</div>
+<div class="font-mono-data text-headline-lg text-error">412</div>
+<div class="font-body-md text-body-md text-error mt-1">Hazardous</div>
+</div>
+</div>
+</section>
+<!-- AI Advisory Card (Span 4) -->
+<section class="md:col-span-4 glass-card rounded-xl p-8 flex flex-col gap-stack-md">
+<div class="flex items-center gap-2 text-primary-fixed-dim border-b border-white/10 pb-4">
+<span class="material-symbols-outlined">smart_toy</span>
+<h3 class="font-headline-md text-headline-md">Risk Translator</h3>
+</div>
+<div class="font-body-lg text-body-lg text-on-surface leading-relaxed mt-2">
+<p>Immediate action required. Prolonged exposure to current wet bulb temperatures presents severe physiological risks. Outdoor activities should be suspended.</p>
+<p class="mt-4 text-on-surface-variant text-body-md">AI Confidence: <span class="text-primary-fixed-dim font-mono-data">98.4%</span></p>
+</div>
+<button class="mt-auto w-full border border-primary-fixed-dim text-primary-fixed-dim font-label-bold text-label-bold py-3 rounded uppercase tracking-widest hover:bg-primary-fixed-dim hover:text-on-primary-fixed transition-all">View Protocol</button>
+</section>
+<!-- Data Visualization Chart (Span 12) -->
+<section class="md:col-span-12 glass-card rounded-xl p-8 h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">24-Hour Trajectory: Temp vs Humidity</h2>
+<div class="flex gap-4">
+<div class="flex items-center gap-2"><div class="w-3 h-[2px] bg-primary-fixed-dim"></div><span class="font-mono-data text-mono-data text-on-surface-variant">Temp</span></div>
+<div class="flex items-center gap-2"><div class="w-3 h-[2px] bg-secondary-container"></div><span class="font-mono-data text-mono-data text-on-surface-variant">Humidity</span></div>
+</div>
+</div>
+<div class="flex-1 w-full relative border-l border-b border-outline-variant/30">
+<!-- Abstract representation of a line chart using CSS -->
+<div class="absolute bottom-0 left-0 w-full h-[60%] border-t border-primary-fixed-dim opacity-50" style="clip-path: polygon(0 100%, 10% 80%, 30% 85%, 50% 60%, 70% 30%, 90% 10%, 100% 0);"></div>
+<div class="absolute bottom-0 left-0 w-full h-[80%] border-t border-secondary-container opacity-50" style="clip-path: polygon(0 50%, 20% 60%, 40% 40%, 60% 80%, 80% 90%, 100% 100%);"></div>
+<!-- Grid Lines -->
+<div class="absolute w-full h-px bg-outline-variant/20 top-1/4"></div>
+<div class="absolute w-full h-px bg-outline-variant/20 top-2/4"></div>
+<div class="absolute w-full h-px bg-outline-variant/20 top-3/4"></div>
+</div>
+<div class="flex justify-between mt-4 font-mono-data text-mono-data text-on-surface-variant/50">
+<span>00:00</span>
+<span>06:00</span>
+<span>12:00</span>
+<span>18:00</span>
+<span>24:00</span>
+</div>
+</section>
+<!-- Details Grid -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-element-gap">
+<!-- Detail Card 1 -->
+<div class="glass-card glass-card-hover rounded-xl p-6 transition-all cursor-default">
+<span class="material-symbols-outlined text-primary-fixed-dim mb-4 text-[32px]">terrain</span>
+<h4 class="font-label-bold text-label-bold text-on-surface-variant mb-2">ELEVATION</h4>
+<div class="font-mono-data text-headline-md text-on-surface">1,432 <span class="text-body-md text-on-surface-variant">m</span></div>
+</div>
+<!-- Detail Card 2 -->
+<div class="glass-card glass-card-hover rounded-xl p-6 transition-all cursor-default">
+<span class="material-symbols-outlined text-primary-fixed-dim mb-4 text-[32px]">water_drop</span>
+<h4 class="font-label-bold text-label-bold text-on-surface-variant mb-2">PRECIPITATION (24H)</h4>
+<div class="font-mono-data text-headline-md text-on-surface">0.0 <span class="text-body-md text-on-surface-variant">mm</span></div>
+</div>
+<!-- Detail Card 3 -->
+<div class="glass-card glass-card-hover rounded-xl p-6 transition-all cursor-default relative overflow-hidden">
+<div class="absolute right-0 top-0 w-16 h-16 bg-error/20 blur-xl"></div>
+<span class="material-symbols-outlined text-error mb-4 text-[32px]">landscape</span>
+<h4 class="font-label-bold text-label-bold text-on-surface-variant mb-2">TERRAIN RISK VECTOR</h4>
+<div class="font-headline-md text-headline-md text-error">Elevated</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full max-w-[1100px] mx-auto py-section-gap px-margin-page flex flex-col md:flex-row justify-between items-center gap-stack-md mt-auto border-t border-white/5 bg-transparent">
+<div class="font-display-xl text-headline-md font-bold text-primary-fixed-dim">
+            Sahāyak
+        </div>
+<div class="font-body-md text-body-md text-on-surface-variant/70 text-center md:text-left">
+            © 2024 Sahāyak Global. Powered by FastAPI, Ollama, and Open-Meteo.
+        </div>
+<div class="flex gap-4 font-body-md text-body-md text-on-surface-variant">
+<a class="hover:text-primary-fixed-dim underline transition-all cursor-pointer" href="#">Documentation</a>
+<a class="hover:text-primary-fixed-dim underline transition-all cursor-pointer" href="#">Methodology</a>
+<a class="hover:text-primary-fixed-dim underline transition-all cursor-pointer" href="#">Privacy Policy</a>
+</div>
+</footer>
+</body></html>
