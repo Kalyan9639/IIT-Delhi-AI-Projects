@@ -1,0 +1,9 @@
+transformers
+PyPDF2
+python-docx
+fastapi
+uvicorn
+ollama
+rank_bm25
+sentence-transformers
+python-multipart
