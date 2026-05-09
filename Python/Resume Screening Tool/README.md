@@ -106,7 +106,7 @@ The system guarantees **explainability** for HR professionals by exposing the ex
 ### 🤖 AI & Natural Language Processing
 | Technology | Purpose |
 |------------|---------|
-| **Ollama** | Local LLM inference for JD extraction and verdict generation |
+| **Ollama** | Cloud LLM inference for JD extraction and verdict generation |
 | **Hugging Face Transformers** | Zero-Shot Classification pipeline (`nli-distilroberta-base-v2`) |
 | **Sentence Transformers** | Semantic embeddings (`all-MiniLM-L6-v2`) |
 | **rank_bm25** | High-speed keyword retrieval algorithm |
@@ -119,14 +119,6 @@ The system guarantees **explainability** for HR professionals by exposing the ex
 | **PyPDF2** | PDF text extraction |
 | **python-docx** | DOCX document parsing |
 | **NumPy** | Matrix operations and scoring |
-
-### 🎨 Frontend
-| Technology | Purpose |
-|------------|---------|
-| **HTML5** | Modern markup structure |
-| **CSS3** | Glassmorphism design with dark mode |
-| **JavaScript** | Asynchronous API integration |
-| **Fetch API** | File uploads and dynamic rendering |
 
 ---
 
@@ -141,8 +133,8 @@ The system guarantees **explainability** for HR professionals by exposing the ex
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/hireforge-pro.git
-cd hireforge-pro
+git clone https://github.com/Kalyan9639/IIT-Delhi-AI-Projects.git
+cd "IIT-Delhi-AI-Projects/Python/Resume Screening Tool"
 ```
 
 ### Step 2: Install Ollama and Required Model
@@ -175,12 +167,6 @@ pip install -r requirements.txt
 
 # Or using uv (recommended)
 uv pip install -r requirements.txt
-```
-
-### Step 5: Verify Installation
-
-```bash
-python -c "import fastapi, transformers, sentence_transformers, ollama; print('All dependencies installed!')"
 ```
 
 ---
@@ -309,21 +295,6 @@ Visit `http://localhost:8000/docs` for interactive Swagger UI documentation.
 
 ## 🔧 Configuration
 
-### Environment Variables
-
-Create a `.env` file (optional):
-
-```bash
-# Ollama Configuration
-OLLAMA_MODEL=gpt-oss:20b-cloud
-OLLAMA_HOST=http://localhost:11434
-
-# API Configuration
-API_HOST=0.0.0.0
-API_PORT=8000
-LOG_LEVEL=INFO
-```
-
 ### Model Customization
 
 Edit `jd_skill_extraction.py` to change the LLM model:
@@ -331,21 +302,6 @@ Edit `jd_skill_extraction.py` to change the LLM model:
 ```python
 # Change to your preferred model
 self.model_name = "mistral"  # or "llama2", "neural-chat", etc.
-```
-
----
-
-## 🧪 Testing
-
-```bash
-# Run basic functionality test
-python -c "
-from jd_skill_extraction import JDExtractor
-from resume_parsing import ResumeParser
-from nlp_logic import NLPEngine
-
-print('✓ All modules imported successfully!')
-"
 ```
 
 ---
@@ -386,25 +342,10 @@ We welcome contributions! Please follow these steps:
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Hugging Face** for the amazing transformers library
-- **Ollama** for local LLM inference
-- **Sentence Transformers** for semantic embeddings
-- **FastAPI** for the excellent web framework
-
----
-
 ## 📞 Support & Contact
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/hireforge-pro/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/hireforge-pro/discussions)
+- **Issues**: [GitHub Issues](https://github.com/Kalyan9639/IIT-Delhi-AI-Projects/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Kalyan9639/IIT-Delhi-AI-Projects/discussions)
 - **Email**: support@hireforge.pro
 
 ---
