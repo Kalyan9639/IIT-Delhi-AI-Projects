@@ -1,0 +1,17 @@
+# Core AI/ML
+transformers
+PyPDF2
+python-docx
+ollama
+rank_bm25
+sentence-transformers
+python-multipart
+
+# FastAPI backend
+requests
+fastapi
+uvicorn
+python-dotenv
+
+# Frontend build tools (for development)
+# npm install in frontend directory

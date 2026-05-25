@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireForge PRO // Neural Resume Intelligence</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Updated with high-end tech-focused font pairings -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Sora:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #05070a;
+            --surface: #0f1117;
+            --accent-primary: #00f2ff; /* Cyber Cyan */
+            --accent-secondary: #7000ff; /* Electric Purple */
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: rgba(255, 255, 255, 0.08);
+            --glow: rgba(0, 242, 255, 0.15);
+            
+            /* Font Variables */
+            --font-header: 'Syne', sans-serif;
+            --font-body: 'Sora', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(112, 0, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            padding-bottom: 50px;
+            letter-spacing: -0.01em;
+        }
+
+        /* --- Header Section --- */
+        .navbar {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-header);
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+        }
+
+        .brand span {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Status Bar --- */
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Layout Container --- */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        /* --- Panels --- */
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.5);
+        }
+
+        .panel-header {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-title {
+            font-family: var(--font-header);
+            font-size: 1rem;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* --- Input Styles --- */
+        .input-group { margin-bottom: 1.5rem; }
+        .input-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        textarea, input {
+            width: 100%;
+            background: #090b0f;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px var(--glow);
+            background: #0d1016;
+        }
+
+        textarea { height: 200px; resize: none; line-height: 1.6; }
+
+        /* --- Action Buttons --- */
+        .btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: var(--font-header);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 242, 255, 0.4);
+        }
+
+        .btn:active { transform: translateY(0); }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 242, 255, 0.05);
+        }
+
+        /* --- Phase 1: Skill Tags --- */
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1.2rem;
+            min-height: 40px;
+        }
+
+        .tag {
+            background: rgba(112, 0, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid rgba(112, 0, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .tag i { cursor: pointer; color: var(--danger); font-size: 10px; transition: transform 0.2s; }
+        .tag i:hover { transform: scale(1.2); }
+
+        /* --- Upload Component --- */
+        .upload-zone {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            transition: all 0.4s;
+            cursor: pointer;
+            background: rgba(255,255,255,0.01);
+        }
+
+        .upload-zone:hover {
+            border-color: var(--accent-primary);
+            background: rgba(0, 242, 255, 0.03);
+        }
+
+        .file-card {
+            background: #11141b;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            font-family: var(--font-mono);
+        }
+
+        /* --- Results Area --- */
+        .results-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .candidate-card {
+            background: #0d1016;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .candidate-card:hover {
+            border-color: var(--accent-secondary);
+            background: #12161f;
+            transform: scale(1.01);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+
+        .rank-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--accent-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-header);
+            font-size: 1rem;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
+        }
+
+        .score-display {
+            text-align: right;
+        }
+
+        .score-val {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            font-family: var(--font-header);
+            line-height: 1;
+        }
+
+        /* --- Skill Visualization --- */
+        .skill-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 1.2rem;
+        }
+
+        .matrix-item {
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-family: var(--font-mono);
+        }
+
+        .matrix-item.verified { background: rgba(16, 185, 129, 0.08); border: 1px solid var(--success); color: var(--success); }
+        .matrix-item.partial { background: rgba(245, 158, 11, 0.08); border: 1px solid var(--warning); color: var(--warning); }
+        .matrix-item.missing { background: rgba(239, 68, 68, 0.08); border: 1px solid var(--danger); color: var(--danger); }
+
+        .evidence-box {
+            margin-top: 1.2rem;
+            padding: 14px;
+            background: #05070a;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            border-left: 4px solid var(--accent-secondary);
+        }
+
+        /* --- Loading Overlays --- */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 7, 10, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .neural-loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .loader-text {
+            margin-top: 2rem;
+            font-family: var(--font-header);
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hidden { display: none; }
+
+        /* Typography utility for candidates */
+        .candidate-name {
+            font-family: var(--font-header);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="brand">
+            <i data-lucide="cpu"></i>
+            HIREFORGE <span>PRO</span>
+        </div>
+        <div class="status-badge" id="apiStatus">NEURAL CORE ACTIVE</div>
+    </nav>
+
+    <div class="container">
+        <!-- Main Workspace -->
+        <main>
+            <!-- Step 1: Input & Extraction -->
+            <section class="panel">
+                <div class="panel-header">
+                    <div class="panel-title"><i data-lucide="file-text"></i> Job Specification</div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Job Requirements & Context</label>
+                    <textarea id="jobDesc" placeholder="Input the job requirements to begin extraction..."></textarea>
+                </div>
+                <button class="btn btn-outline" onclick="extractSkills()">
+                    <i data-lucide="wand-2"></i> Phase 1: Neural Skill Extraction
+                </button>
+
+                <div class="tags-wrapper" id="extractedTags">
+                    <!-- Tags will appear here -->
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="hidden" style="margin-top: 2rem;">
+                <div class="panel-header">
+                    <div class="panel-title"><i data-lucide="bar-chart-3"></i> Talent Ranking Engine</div>
+                </div>
+                <div class="results-grid" id="resultsList">
+                    <!-- Result cards will be injected here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar Actions -->
+        <aside>
+            <section class="panel" style="margin-bottom: 1.5rem;">
+                <div class="panel-title" style="margin-bottom: 1.2rem;">
+                    <i data-lucide="upload-cloud"></i> Source Resumes
+                </div>
+                <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                    <i data-lucide="files" style="width: 32px; height: 32px; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                    <p style="font-size: 0.8rem; color: var(--text-dim); font-weight: 600;">DRAG & DROP FILES</p>
+                    <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 4px; font-family: var(--font-mono);">PDF / DOCX ONLY</p>
+                    <input type="file" id="fileInput" multiple hidden onchange="handleFiles(this.files)">
+                </div>
+                <div id="fileQueue" style="margin-top: 1rem;"></div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-title" style="margin-bottom: 1.2rem;">
+                    <i data-lucide="zap"></i> Verification Pipeline
+                </div>
+                <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1.5rem; line-height: 1.5;">
+                    Runs Hybrid Screening (BM25 + Bi-Encoder) followed by Deep NLP Context Verification (Phase 2 & 3).
+                </p>
+                <button class="btn" id="runPipelineBtn" onclick="runMassScreening()" disabled>
+                    <i data-lucide="play"></i> Engage Verification
+                </button>
+                <button class="btn btn-outline" style="margin-top: 12px; border-color: var(--border); color: var(--text-dim);" onclick="location.reload()">
+                    <i data-lucide="rotate-ccw"></i> Reset Core
+                </button>
+            </section>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="overlay" id="loadingOverlay">
+        <div class="neural-loader"></div>
+        <p class="loader-text" id="loaderMsg">PROCESSING NEURAL DATA...</p>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        const API_BASE = "http://localhost:8000";
+        let state = {
+            skills: [],
+            files: []
+        };
+
+        // --- Phase 1: JD to JSON ---
+        async function extractSkills() {
+            const jd = document.getElementById('jobDesc').value;
+            if(!jd) return alert("Input a Job Description first.");
+
+            toggleLoader(true, "EXTRACTING MUST-HAVES...");
+            
+            try {
+                const formData = new FormData();
+                formData.append('job_description', jd);
+
+                const response = await fetch(`${API_BASE}/extract-skills`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                state.skills = data.extracted_skills;
+                renderTags();
+                document.getElementById('runPipelineBtn').disabled = false;
+            } catch (e) {
+                console.error(e);
+                alert("Ollama connection failed. Verify backend services.");
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        function renderTags() {
+            const container = document.getElementById('extractedTags');
+            container.innerHTML = state.skills.map((s, idx) => `
+                <div class="tag">
+                    ${s}
+                    <i data-lucide="x" onclick="removeSkill(${idx})"></i>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function removeSkill(idx) {
+            state.skills.splice(idx, 1);
+            renderTags();
+        }
+
+        // --- File Handling ---
+        function handleFiles(files) {
+            const queue = document.getElementById('fileQueue');
+            Array.from(files).forEach(file => {
+                state.files.push(file);
+                const card = document.createElement('div');
+                card.className = 'file-card';
+                card.innerHTML = `
+                    <span style="display:flex; align-items:center; gap:8px;">
+                        <i data-lucide="file" style="width:14px; color:var(--accent-primary)"></i>
+                        ${file.name}
+                    </span>
+                    <i data-lucide="x" style="width:14px; color:var(--danger); cursor:pointer"></i>
+                `;
+                queue.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // --- Mass Screening (Phase 2 & 3) ---
+        async function runMassScreening() {
+            if(state.files.length === 0) return alert("Provide resumes for processing.");
+
+            const jd = document.getElementById('jobDesc').value;
+            toggleLoader(true, "RUNNING DEEP VERIFICATION...");
+
+            try {
+                const formData = new FormData();
+                formData.append('job_description', jd);
+                state.files.forEach(f => formData.append('files', f));
+
+                const response = await fetch(`${API_BASE}/process-multiple`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                renderResults(data.top_candidates);
+            } catch (e) {
+                console.error(e);
+                alert("Deep Verification pipeline error.");
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        function renderResults(candidates) {
+            const section = document.getElementById('resultsSection');
+            const list = document.getElementById('resultsList');
+            section.classList.remove('hidden');
+            
+            list.innerHTML = candidates.map(c => `
+                <div class="candidate-card">
+                    <div class="card-top">
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <div class="rank-circle">#${c.rank}</div>
+                            <div>
+                                <h3 class="candidate-name">${c.filename}</h3>
+                                <p style="font-size:0.7rem; color:var(--text-dim); font-family:var(--font-mono); text-transform:uppercase;">Status: Verification Verified</p>
+                            </div>
+                        </div>
+                        <div class="score-display">
+                            <div style="font-size:0.6rem; color:var(--text-dim); text-transform:uppercase; font-weight:800; letter-spacing:1px; margin-bottom:2px;">Neural Score</div>
+                            <div class="score-val">${c.final_score.toFixed(0)}</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-matrix">
+                        ${c.evaluations.map(e => `
+                            <div class="matrix-item ${getMatrixClass(e.status)}">
+                                <span>${e.skill}</span>
+                                <span style="font-size:0.5rem; opacity:0.8; font-weight:400;">${e.status}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="evidence-box">
+                        <span style="color:var(--accent-primary); font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase; font-weight:800; display:block; margin-bottom:5px;">AI Verdict</span>
+                        <p style="margin-bottom:10px; color:var(--text-main);">${c.ai_verdict || 'AI analysis unavailable.'}</p>
+                        <span style="color:var(--accent-primary); font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase; font-weight:800; display:block; margin-bottom:5px;">System Evidence Log</span>
+                        "${c.evaluations.find(e => e.status === 'Verified Professional')?.evidence_chunk || 'No professional evidence found.'}"
+                    </div>
+                </div>
+            `).join('');
+            
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getMatrixClass(status) {
+            if(status === 'Verified Professional') return 'verified';
+            if(status === 'Academic/Partial') return 'partial';
+            return 'missing';
+        }
+
+        function toggleLoader(show, msg = "") {
+            const l = document.getElementById('loadingOverlay');
+            document.getElementById('loaderMsg').textContent = msg;
+            l.style.display = show ? 'flex' : 'none';
+        }
+    </script>
+</body>
+</html>
