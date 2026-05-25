@@ -10,9 +10,6 @@
 AI-powered talent intelligence and hiring automation platform built with FastAPI + Svelte.
 This system is intended for recruiters and hiring teams.
 
-Repository:  
-<https://github.com/Kalyan9639/IIT-Delhi-AI-Projects/tree/main/Full%20Stack%20Development/AI%20Powered%20Talent%20Intelligence%20and%20Hiring%20Automation%20Platform>
-
 ## Overview
 
 HireForge Pro helps recruiters create jobs, upload resumes, and run a multi-phase screening pipeline:
