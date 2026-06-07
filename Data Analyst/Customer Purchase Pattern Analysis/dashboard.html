@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Customer Insights Dashboard</title>
+    <style>
+        :root { --bg: #f4f7f6; --card: #ffffff; --primary: #2563eb; --text: #1f2937; }
+        body { font-family: sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .card { background: var(--card); padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .full-width { grid-column: span 3; }
+        h1 { margin-bottom: 20px; }
+        .metric { font-size: 24px; font-weight: bold; color: var(--primary); }
+        .recommendation { border-left: 4px solid var(--primary); padding-left: 15px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>E-Commerce Customer Purchase Pattern Dashboard</h1>
+    <div class="grid">
+        <div class="card"><h3>Total Net Revenue</h3><div class="metric">$10,644,560.42</div></div>
+        <div class="card"><h3>Total Unique Orders</h3><div class="metric">19,962</div></div>
+        <div class="card"><h3>Unique Customers</h3><div class="metric">4,339</div></div>
+        <div class="card"><h3>Avg Order Value</h3><div class="metric">$533.24</div></div>
+        <div class="card"><h3>Retention Rate</h3><div class="metric">65.59%</div></div>
+        <div class="card"><h3>Cancellation Rate</h3><div class="metric">16.12%</div></div>
+        
+        <div class="card full-width">
+            <h3>Visual Analysis (9-Panel Deep Dive)</h3>
+            <img src="Outputs\E-Commerce Customer Purchase Pattern Dashboard (9-panel).png" alt="Purchase Patterns" style="width:100%; height:auto;">
+        </div>
+
+        <div class="card full-width">
+            <h3>Insights & Recommendations</h3>
+            <div class="recommendation">
+                <p><strong>Optimize Peak Hours:</strong> Order volume peaks mid-week during specific morning/afternoon windows. Align marketing "flash sales" and customer support staffing to these high-traffic periods to maximize conversion and engagement.</p>
+            </div>
+            <div class="recommendation">
+                <p><strong>RFM-Driven Personalization:</strong> High-value RFM segments ("Champions") show distinct monetary spend behavior. Create exclusive "VIP early access" programs for these top-tier customers to solidify loyalty and boost lifetime value.</p>
+            </div>
+            <div class="recommendation">
+                <p><strong>Operational Risk Mitigation:</strong> Countries with high cancellation rates warrant an immediate logistics audit. Investigate shipping delays or regional customs issues for these specific locations to reduce future returns and improve overall customer experience.</p>
+            </div>
+            <div class="recommendation">
+                <p><strong>Basket Optimization:</strong> Customers show a preference for specific basket sizes on weekends. Utilize cross-selling algorithms to recommend complementary items to customers whose basket size is just below your average weekend target.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
